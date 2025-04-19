@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'royal-blue': '#0047AB',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="max-w-5xl mx-auto p-8">
+        <!-- Header Section -->
+        <header class="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
+            <!-- Profile Image -->
+            <div class="w-40 h-40">
+                <svg viewBox="0 0 24 24" class="w-full h-full" fill="black">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+            </div>
+            
+            <!-- Name and Contact Info -->
+            <div class="flex-1 text-center md:text-left">
+                <h1 class="text-4xl font-bold text-royal-blue mb-2">KATHRYN SORIANO, RN</h1>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>0123 456 7890</li>
+                    <li>hello@reallygreatsite.com</li>
+                    <li>123 Malasakit St., Kababayan City 1234</li>
+                </ul>
+            </div>
+        </header>
+
+        <hr class="border-royal-blue border-t-2 mb-8">
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Left Column -->
+            <div>
+                <!-- Introduction Section -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-bold text-royal-blue mb-4">INTRODUCTION</h2>
+                    <p>A nurse with 5+ years of experience in various healthcare settings, including hospitals and clinics. Proficient in patient assessment, medication administration, and care plan implementation. Skilled in communication and teamwork, dedicated to providing compassionate care to patients.</p>
+                </section>
+
+                <!-- Education Section -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-bold text-royal-blue mb-4">EDUCATION</h2>
+                    
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold">Master of Science in Nursing</h3>
+                        <p>Narra National University - College of Nursing, 2017</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold">Bachelor of Science in Nursing</h3>
+                        <p>Narra National University - College of Nursing, 2015</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold">Secondary Education</h3>
+                        <p>Narra National Highschool, 2011</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold">Primary Education</h3>
+                        <p>Narra National Elementary School, 2007</p>
+                    </div>
+                </section>
+
+                <!-- Certifications Section -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-bold text-royal-blue mb-4">CERTIFICATIONS</h2>
+                    <div>
+                        <h3 class="text-lg font-semibold">Nurse Licensure Exam (NLE)</h3>
+                        <p>Passed 2015</p>
+                        <p>Professional Regulations Commission</p>
+                    </div>
+                </section>
+
+                <!-- Skills Section -->
+                <section>
+                    <h2 class="text-2xl font-bold text-royal-blue mb-4">SKILLS</h2>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Leadership</li>
+                        <li>Time Management</li>
+                        <li>Punctual</li>
+                    </ul>
+                </section>
+            </div>
+            
+            <!-- Right Column -->
+            <div>
+                <!-- Work Experience Section -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-bold text-royal-blue mb-4">WORK EXPERIENCE</h2>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold">Clinical Nurse Educator</h3>
+                        <p class="mb-1">Narra National University - College of Nursing</p>
+                        <p class="mb-2">January 2023 - Present</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Taught and mentored nursing students</li>
+                            <li>Developed and implemented the program's nursing curriculum</li>
+                            <li>Continuously stayed up-to-date with the latest healthcare practices and technologies.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold">Charge Nurse</h3>
+                        <p class="mb-1">Las Felipinas General Hospital</p>
+                        <p class="mb-2">January 2021 - Present</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Supervised a team of nurses and certified nursing assistants</li>
+                            <li>Ensured high-quality patient care</li>
+                            <li>Maintained accurate patient records.</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold">Staff Nurse</h3>
+                        <p class="mb-1">Las Felipinas General Hospital</p>
+                        <p class="mb-2">January 2018 - December 2020</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Responsible for providing direct patient care, administering medications, and coordinating with other healthcare professionals</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Additional Information Section -->
+                <section>
+                    <h2 class="text-2xl font-bold text-royal-blue mb-4">ADDITIONAL INFORMATION</h2>
+                    <div>
+                        <h3 class="text-lg font-semibold">Volunteer Nurse</h3>
+                        <p class="mb-1">Sagip Dalisay Foundation</p>
+                        <p class="mb-2">2015-Present</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Participated in disaster relief efforts</li>
+                            <li>Provided healthcare and first-aid services at community events</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
