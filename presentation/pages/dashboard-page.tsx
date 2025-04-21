@@ -12,14 +12,9 @@ export function DashboardPage() {
     <DashboardLayout>
       <div className="flex flex-col gap-6 p-6 pt-20 md:pt-6">
         <DashboardHeader title="Dashboard" showWelcome={true} />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="md:col-span-2">
-            <StatsSection />
-          </div>
-          <div>
+          <div className=" w-full">
             <QuickActionsSection />
           </div>
-        </div>
         <RecentResumesSection />
         <ResumeTemplatesSection />
       </div>

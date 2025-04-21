@@ -4,27 +4,18 @@ import { DashboardLayout } from "@/presentation/layouts/dashboard-layout"
 import { DashboardHeader } from "@/presentation/components/dashboard/dashboard-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Search, FileText, MessageCircle, Mail, ExternalLink, BookOpen } from "lucide-react"
+import {  FileText,  ExternalLink,  } from "lucide-react"
 
 export function HelpPage() {
   return (
     <DashboardLayout>
       <div className="flex flex-col gap-6 p-6 pt-20 md:pt-6">
         <DashboardHeader title="Help & Support" description="Find answers to common questions and get support" />
-
-        <div className="relative w-full max-w-2xl mx-auto mb-6">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 dark:text-gray-400" />
-          <Input type="search" placeholder="Search for help articles..." className="pl-10 bg-white dark:bg-gray-800" />
-        </div>
-
         <Tabs defaultValue="faq" className="w-full">
           <TabsList className="mb-4">
             <TabsTrigger value="faq">FAQ</TabsTrigger>
-            <TabsTrigger value="guides">Guides</TabsTrigger>
-            <TabsTrigger value="contact">Contact Support</TabsTrigger>
           </TabsList>
 
           <TabsContent value="faq" className="mt-0 space-y-4">
@@ -209,125 +200,13 @@ export function HelpPage() {
                   </Card>
                 </div>
 
-                <div className="mt-6">
-                  <h3 className="font-medium mb-3">Video Tutorials</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border rounded-lg overflow-hidden">
-                      <div className="aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                        <BookOpen className="h-10 w-10 text-gray-400" />
-                      </div>
-                      <div className="p-3">
-                        <h4 className="font-medium">Complete Resume Walkthrough</h4>
-                        <p className="text-sm text-gray-500 mt-1">10:24 min</p>
-                      </div>
-                    </div>
-
-                    <div className="border rounded-lg overflow-hidden">
-                      <div className="aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                        <BookOpen className="h-10 w-10 text-gray-400" />
-                      </div>
-                      <div className="p-3">
-                        <h4 className="font-medium">Advanced Customization Tips</h4>
-                        <p className="text-sm text-gray-500 mt-1">8:15 min</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
               </CardContent>
               <CardFooter>
                 <Button variant="outline" className="w-full">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Visit Knowledge Base
                 </Button>
-              </CardFooter>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="contact" className="mt-0 space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Contact Support</CardTitle>
-                <CardDescription>Get help from our support team</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  <Card className="border shadow-sm">
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-3">
-                        <div className="bg-primary/10 p-2 rounded-full">
-                          <MessageCircle className="h-5 w-5 text-primary" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium">Live Chat</h3>
-                          <p className="text-sm text-gray-500 mt-1">Chat with our support team</p>
-                          <p className="text-xs text-gray-500 mt-2">Available Mon-Fri, 9am-5pm EST</p>
-                          <Button variant="outline" size="sm" className="mt-2">
-                            Start Chat
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border shadow-sm">
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-3">
-                        <div className="bg-primary/10 p-2 rounded-full">
-                          <Mail className="h-5 w-5 text-primary" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium">Email Support</h3>
-                          <p className="text-sm text-gray-500 mt-1">Send us an email</p>
-                          <p className="text-xs text-gray-500 mt-2">Response within 24 hours</p>
-                          <Button variant="outline" size="sm" className="mt-2">
-                            support@resumaker.com
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="font-medium">Send a Support Request</h3>
-
-                  <div className="space-y-2">
-                    <label htmlFor="subject" className="text-sm font-medium">
-                      Subject
-                    </label>
-                    <Input id="subject" placeholder="What do you need help with?" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="description" className="text-sm font-medium">
-                      Description
-                    </label>
-                    <textarea
-                      id="description"
-                      rows={5}
-                      className="w-full p-3 border rounded-md"
-                      placeholder="Please describe your issue in detail..."
-                    ></textarea>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium">
-                      Email Address
-                    </label>
-                    <Input id="email" type="email" placeholder="Where should we send our response?" />
-                  </div>
-
-                  <div>
-                    <label className="flex items-center gap-2">
-                      <input type="checkbox" className="rounded" />
-                      <span className="text-sm">Include system information to help troubleshoot</span>
-                    </label>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter className="flex justify-end gap-2">
-                <Button variant="outline">Cancel</Button>
-                <Button>Submit Request</Button>
               </CardFooter>
             </Card>
           </TabsContent>
