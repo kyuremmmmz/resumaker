@@ -2,8 +2,7 @@ import { ResumeData } from "@/types/initial-data"
 import jsPDF from "jspdf"
 
 export default function generateSamiraPDF(doc: jsPDF, resumeData: ResumeData, profileImage: string | null) {
-    // Page dimensions and margins
-    const pageWidth = 210 // A4 width in mm
+    const pageWidth = 210
     const margin = 15
 
     // Get contact info

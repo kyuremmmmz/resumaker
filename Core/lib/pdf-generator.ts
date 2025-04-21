@@ -75,13 +75,10 @@ export async function generatePDF(resumeData: ResumeData, profileImage: string |
     doc.save(`resume-${templateName}-template.pdf`)
 }
 
-// Add the email sending function
 export async function sendResumeByEmail(resumeData: ResumeData, profileImage: string | null, templateName: string, email: string) {
     try {
-        // First generate the PDF
         const doc = new jsPDF();
 
-        // Generate PDF based on template
         switch (templateName) {
             case "stefano":
                 generateStefanoPDF(doc, resumeData, profileImage);
