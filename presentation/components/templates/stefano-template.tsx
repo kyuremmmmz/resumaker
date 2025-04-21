@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import type { ResumeData } from "@/types/resume"
+import { ResumeData } from "@/types/initial-data"
 
 interface TemplateProps {
   resumeData: ResumeData

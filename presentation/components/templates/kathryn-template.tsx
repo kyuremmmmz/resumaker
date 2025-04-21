@@ -1,5 +1,6 @@
+import { ResumeData } from "@/types/initial-data"
 import Image from "next/image"
-import type { ResumeData } from "@/types/resume"
+
 
 interface TemplateProps {
   resumeData: ResumeData

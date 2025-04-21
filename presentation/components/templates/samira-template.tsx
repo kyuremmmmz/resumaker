@@ -1,6 +1,7 @@
 import { ResumeData } from "@/types/initial-data"
 
 
+
 interface TemplateProps {
   resumeData: ResumeData
   profileImage: string | null
