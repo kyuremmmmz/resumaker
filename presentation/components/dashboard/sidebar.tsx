@@ -5,21 +5,18 @@ import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/presentation/components/theme-toggle"
 import { BarChart3, FileText, HelpCircle, Home, LogOut, PlusCircle, Settings, User } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 const sidebarLinks = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "My Resumes", href: "/resumes", icon: FileText },
-  { name: "Templates", href: "/templates", icon: FileText },
-  { name: "Analytics", href: "/analytics", icon: BarChart3 },
-  { name: "Account", href: "/account", icon: User },
   { name: "Settings", href: "/settings", icon: Settings },
   { name: "Help & Support", href: "/help", icon: HelpCircle },
 ]
 
 export function Sidebar() {
   const pathname = usePathname()
-
+  const router = useRouter();
   return (
     <div className="hidden md:flex flex-col w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
       <div className="p-6">
@@ -30,7 +27,7 @@ export function Sidebar() {
       </div>
 
       <div className="px-4 mb-6">
-        <Button className="w-full justify-start gap-2">
+        <Button onClick={()=>router.push('/editor')} className="w-full justify-start gap-2">
           <PlusCircle className="h-4 w-4" />
           Create New Resume
         </Button>

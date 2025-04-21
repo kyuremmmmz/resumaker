@@ -1,8 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlusCircle, Upload, Download, Copy } from "lucide-react"
+import { redirect } from "next/navigation"
 
 export function QuickActionsSection() {
+  const handleNavigation = () => {
+    redirect('/editor')
+  }
   return (
     <Card className="h-full w-full">
       <CardHeader>
@@ -10,7 +14,7 @@ export function QuickActionsSection() {
         <CardDescription>Common tasks you can perform right away</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Button className="w-full justify-start gap-2">
+        <Button onClick={()=>handleNavigation()} className="w-full justify-start gap-2">
           <PlusCircle className="h-4 w-4" />
           Create New Resume
         </Button>
