@@ -35,6 +35,7 @@ export default function useEditorProps() {
         }
     }
 
+
     const handleSendEmail = async () => {
         if (!emailAddress || !emailAddress.includes("@")) {
             toast({

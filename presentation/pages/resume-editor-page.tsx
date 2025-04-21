@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Download, Eye, EyeOff, Mail } from "lucide-react"
+import { DoorOpenIcon, Download, Eye, EyeOff, Mail } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import useEditorProps from "../hooks/useEditorprops"
 import ResumeEditor from "../components/resume-editor"
+import { useRouter } from "next/navigation"
 
 
 export default function ResumePage() {
@@ -39,6 +40,7 @@ export default function ResumePage() {
     templates,
     ActiveTemplateComponent,
   } = useEditorProps();
+  const router = useRouter();
   return (
     <div className="container mx-auto py-8">
       <div className="flex flex-col gap-6">
@@ -52,6 +54,10 @@ export default function ResumePage() {
             <Button onClick={handleDownload} disabled={isDownloading}>
               <Download className="mr-2 h-4 w-4" />
               {isDownloading ? "Generating PDF..." : "Download PDF"}
+            </Button>
+            <Button onClick={()=>router.push('/')}>
+              <DoorOpenIcon className="mr-2 h-4 w-4" />
+              Back
             </Button>
             <Button onClick={() => setEmailDialogOpen(true)} variant="secondary">
               <Mail className="mr-2 h-4 w-4" />
