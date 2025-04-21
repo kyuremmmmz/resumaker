@@ -13,6 +13,8 @@ import OliviaTemplate from "../components/templates/olivia-template"
 import RachelleTemplate from "../components/templates/rachelle-template"
 import SamiraTemplate from "../components/templates/samira-template"
 import StefanoTemplate from "../components/templates/stefano-template"
+import postDataService from "@/Data/api/post"
+import { SoftwareEngineerResume } from "@/types/postData"
 
 export default function useEditorProps() {
     const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData)
@@ -74,6 +76,7 @@ export default function useEditorProps() {
             setIsSendingEmail(false)
         }
     }
+
 
     const templates = [
         { id: "stefano", name: "Stefano", component: StefanoTemplate },

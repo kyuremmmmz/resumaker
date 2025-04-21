@@ -1,0 +1,32 @@
+// @/types/initial-data.ts
+
+export interface SoftwareEngineerResume {
+    name: string;
+    JobTitle: string | null;
+    PreviousJobTitle: string | null;
+    PreviousCompany: string | null;
+    PreviousLocation: string | null;
+    PreviousDescription: string | null;
+    Location: string | null;
+    Company: string | null;
+    Dates: string | null;
+    Description: string | null;
+    contactNumber: string | null;
+    email: string;
+    aboutMe: string | null;
+    github: string | null;
+    linkedIn: string | null;
+    portfolio: string | null;
+    Certification1: string | null; 
+    Certification2: string | null;
+    Date1: string | null;
+    Date2: string | null;
+    degree: string | null;
+    University: string | null;
+    UnivLoc: string | null;
+    DateEnded: string | null;
+    gpa: string | null;
+    address: string | null;
+    techskills: string | null;
+    softskills: string | null;
+}

@@ -71,7 +71,6 @@ export async function generatePDF(resumeData: ResumeData, profileImage: string |
             generateStefanoPDF(doc, resumeData, profileImage)
     }
 
-    // Save PDF
     doc.save(`resume-${templateName}-template.pdf`)
 }
 
