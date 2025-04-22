@@ -143,8 +143,16 @@ export default function generateRachellePDF(doc: jsPDF, resumeData: ResumeData, 
     }
 
     // Left column - Profile image, education, skills
-    let leftColY = 60 // Start after profile image space
+    let leftColY = 60
 
+    if (profileImage) {
+        doc.addImage(profileImage, 'JPEG', 30, 10, 40, 40); 
+    } else {
+        doc.setFillColor(255, 255, 255)
+        doc.circle(50, 25, 20)
+        doc.text(fullName.charAt(0), 50, 25, { align: "center" })
+        doc.text(fullName.charAt(5), 52, 25, { align: "center" })
+    }
     // Education Section
     leftColY = checkForPageBreak(doc, leftColY, margin)
     doc.setFontSize(16)
