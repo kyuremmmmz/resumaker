@@ -22,82 +22,6 @@ export default function generateRachellePDF(doc: jsPDF, resumeData: ResumeData, 
 
     // Two column layout
     const colWidth = (pageWidth - 3 * margin) / 2
-
-    // Left column - Profile image, education, skills
-    let leftColY = 60 // Start after profile image space
-
-    doc.setFontSize(16)
-    doc.setFont("helvetica", "bold")
-    doc.setTextColor(213, 63, 140) // Pink text
-    doc.text("EDUCATION", margin, leftColY)
-    leftColY += 8
-
-    doc.setDrawColor(200, 200, 200) // Gray line
-    doc.setLineWidth(0.5)
-    doc.line(margin, leftColY, margin + colWidth, leftColY)
-    leftColY += 10
-
-    const educationSection = resumeData.sections.find((s) => s.id === "education")
-    if (educationSection) {
-        doc.setFontSize(10)
-        doc.setFont("helvetica", "bold")
-        doc.setTextColor(0, 0, 0) // Black text
-
-        const dates = educationSection.fields.find((f) => f.id === "eduDates")?.value || ""
-        doc.text(dates, margin, leftColY)
-        leftColY += 6
-
-        const university = educationSection.fields.find((f) => f.id === "university")?.value || ""
-        doc.text(university, margin, leftColY)
-        leftColY += 6
-
-        doc.setFont("helvetica", "normal")
-        const degree = educationSection.fields.find((f) => f.id === "degree")?.value || ""
-        doc.text(`• ${degree}`, margin, leftColY)
-        leftColY += 15
-    }
-
-    // Skills with progress bars
-    doc.setFontSize(16)
-    doc.setFont("helvetica", "bold")
-    doc.setTextColor(213, 63, 140) // Pink text
-    doc.text("SKILL", margin, leftColY)
-    leftColY += 8
-
-    doc.setDrawColor(200, 200, 200) // Gray line
-    doc.setLineWidth(0.5)
-    doc.line(margin, leftColY, margin + colWidth, leftColY)
-    leftColY += 10
-
-    const skillsSection = resumeData.sections.find((s) => s.id === "skills")
-    if (skillsSection) {
-        doc.setFontSize(10)
-        doc.setFont("helvetica", "normal")
-        doc.setTextColor(0, 0, 0) // Black text
-
-        skillsSection.fields.forEach((field) => {
-            const skillsArray = field.value.split(", ")
-            skillsArray.forEach((skill, index) => {
-                // Skill name and percentage
-                doc.text(skill, margin, leftColY)
-                const percentage = 90 - index * 5
-                doc.text(`${percentage}%`, margin + colWidth - 10, leftColY)
-                leftColY += 5
-
-                // Progress bar background
-                doc.setDrawColor(200, 200, 200) // Gray
-                doc.setFillColor(200, 200, 200) // Gray
-                doc.roundedRect(margin, leftColY, colWidth - 10, 3, 1, 1, "F")
-
-                // Progress bar fill
-                doc.setFillColor(213, 63, 140) // Pink
-                doc.roundedRect(margin, leftColY, (colWidth - 10) * (percentage / 100), 3, 1, 1, "F")
-
-                leftColY += 8
-            })
-        })
-    }
-
     // Right column - Name, title, summary, experience, contact
     const rightColMargin = margin * 2 + colWidth
     let rightColY = 30
@@ -217,4 +141,101 @@ export default function generateRachellePDF(doc: jsPDF, resumeData: ResumeData, 
         doc.text(`Address: ${location}`, rightColMargin, rightColY)
         rightColY += 6
     }
+
+    // Left column - Profile image, education, skills
+    let leftColY = 60 // Start after profile image space
+
+    // Education Section
+    leftColY = checkForPageBreak(doc, leftColY, margin)
+    doc.setFontSize(16)
+    doc.setFont("helvetica", "bold")
+    doc.setTextColor(213, 63, 140) // Pink text
+    doc.text("EDUCATION", margin, leftColY)
+    leftColY += 8
+
+    leftColY = checkForPageBreak(doc, leftColY, margin)
+    doc.setDrawColor(200, 200, 200) // Gray line
+    doc.setLineWidth(0.5)
+    doc.line(margin, leftColY, margin + colWidth, leftColY)
+    leftColY += 10
+
+    const educationSection = resumeData.sections.find((s) => s.id === "education")
+    if (educationSection) {
+        doc.setFontSize(10)
+        doc.setFont("helvetica", "bold")
+        doc.setTextColor(0, 0, 0) // Black text
+
+        leftColY = checkForPageBreak(doc, leftColY, margin)
+        const dates = educationSection.fields.find((f) => f.id === "eduDates")?.value || ""
+        doc.text(dates, margin, leftColY)
+        leftColY += 6
+
+        leftColY = checkForPageBreak(doc, leftColY, margin)
+        const university = educationSection.fields.find((f) => f.id === "university")?.value || ""
+        doc.text(university, margin, leftColY)
+        leftColY += 6
+
+        doc.setFont("helvetica", "normal")
+        leftColY = checkForPageBreak(doc, leftColY, margin)
+        const degree = educationSection.fields.find((f) => f.id === "degree")?.value || ""
+        doc.text(`• ${degree}`, margin, leftColY)
+        leftColY += 15
+    }
+
+    // Skills Section
+    leftColY = checkForPageBreak(doc, leftColY, margin)
+    doc.setFontSize(16)
+    doc.setFont("helvetica", "bold")
+    doc.setTextColor(213, 63, 140) // Pink text
+    doc.text("SKILL", margin, leftColY)
+    leftColY += 8
+
+    leftColY = checkForPageBreak(doc, leftColY, margin)
+    doc.setDrawColor(200, 200, 200) // Gray line
+    doc.setLineWidth(0.5)
+    doc.line(margin, leftColY, margin + colWidth, leftColY)
+    leftColY += 10
+
+    const skillsSection = resumeData.sections.find((s) => s.id === "skills")
+    if (skillsSection) {
+        doc.setFontSize(10)
+        doc.setFont("helvetica", "normal")
+        doc.setTextColor(0, 0, 0) // Black text
+
+        skillsSection.fields.forEach((field) => {
+            const skillsArray = field.value.split(", ")
+            skillsArray.forEach((skill, index) => {
+                leftColY = checkForPageBreak(doc, leftColY, margin)
+                // Skill name and percentage
+                doc.text(skill, margin, leftColY)
+                const percentage = 90 - index * 5
+                doc.text(`${percentage}%`, 10 + colWidth - 10, leftColY)
+                leftColY += 5
+
+                leftColY = checkForPageBreak(doc, leftColY, margin)
+                // Progress bar background
+                doc.setDrawColor(200, 200, 200) // Gray
+                doc.setFillColor(200, 200, 200) // Gray
+                doc.roundedRect(margin, leftColY, colWidth - 10, 3, 1, 1, "F")
+
+                // Progress bar fill
+                doc.setFillColor(213, 63, 140) // Pink
+                doc.roundedRect(margin, leftColY, (colWidth - 10) * (percentage / 100), 3, 1, 1, "F")
+
+                leftColY += 8
+            })
+        })
+    }
+
+}
+function checkForPageBreak(doc: jsPDF, currentY: number, margin: number): number {
+    const pageHeight = 297;
+    const bottomMargin = 15;
+
+    if (currentY + bottomMargin > pageHeight) {
+        doc.addPage();
+        return margin;
+    }
+
+    return currentY;
 }

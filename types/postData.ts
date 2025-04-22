@@ -1,6 +1,7 @@
-// @/types/initial-data.ts
+import { ResumeData } from "./initial-data";
 
 export interface SoftwareEngineerResume {
+    id: Number;
     name: string;
     JobTitle: string | null;
     PreviousJobTitle: string | null;
@@ -29,4 +30,16 @@ export interface SoftwareEngineerResume {
     address: string | null;
     techskills: string | null;
     softskills: string | null;
+}
+
+
+export interface ResumeEditorProps {
+    resumeData: ResumeData;
+    setResumeData: React.Dispatch<React.SetStateAction<ResumeData>>;
+    profileImage: string | null;
+    setProfileImage: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+export interface RecentResumesSectionProps {
+    resumes: SoftwareEngineerResume[];
 }

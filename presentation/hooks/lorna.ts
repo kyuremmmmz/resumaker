@@ -22,7 +22,8 @@ export default function generateLornaPDF(doc: jsPDF, resumeData: ResumeData, pro
 
     // Add name and job title
     let yPos = 70
-    doc.setTextColor(65, 105, 225) // Blue text
+    yPos += 10;
+    doc.setTextColor(65, 105, 225)
     doc.setFontSize(24)
     doc.setFont("helvetica", "bold")
     doc.text(fullName, margin, yPos)
@@ -32,6 +33,8 @@ export default function generateLornaPDF(doc: jsPDF, resumeData: ResumeData, pro
     doc.text(jobTitle, margin, yPos)
 
     yPos += 20
+    doc.setFillColor(150, 150, 150)
+    doc.circle(30, 50, 20, "F")
 
     // Two column layout
     const colWidth = (pageWidth - 3 * margin) / 2
@@ -206,6 +209,15 @@ export default function generateLornaPDF(doc: jsPDF, resumeData: ResumeData, pro
     }
 }
 
-function checkForPageBreak(doc: jsPDF, leftColY: number, margin: number): number {
-    throw new Error("Function not implemented.")
+function checkForPageBreak(doc: jsPDF, currentY: number, margin: number): number {
+    const pageHeight = 297;
+    const bottomMargin = 15;
+
+    if (currentY + bottomMargin > pageHeight) {
+        doc.addPage();
+        return margin;
+    }
+
+    return currentY;
 }
+

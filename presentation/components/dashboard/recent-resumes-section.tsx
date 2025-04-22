@@ -1,8 +1,22 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Edit, Download, Eye, MoreHorizontal, Trash } from "lucide-react"
+import { GetServerSideProps } from "next";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Edit, Download, Eye, MoreHorizontal, Trash } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,52 +24,25 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import { SoftwareEngineer } from "@/Data/repositories/repositoryImpl";
+import { UseCasesRepo } from "@/domain/usecases/useCasesRepo";
+import { RecentResumesSectionProps, SoftwareEngineerResume } from "@/types/postData";
 
-const recentResumes = [
-  {
-    id: 1,
-    name: "Software Developer Resume",
-    lastEdited: "2 hours ago",
-    status: "Active",
-    views: 24,
-    downloads: 5,
-  },
-  {
-    id: 2,
-    name: "Marketing Manager Resume",
-    lastEdited: "Yesterday",
-    status: "Active",
-    views: 18,
-    downloads: 3,
-  },
-  {
-    id: 3,
-    name: "UX Designer Resume",
-    lastEdited: "3 days ago",
-    status: "Draft",
-    views: 0,
-    downloads: 0,
-  },
-  {
-    id: 4,
-    name: "Content Strategist Resume",
-    lastEdited: "1 week ago",
-    status: "Active",
-    views: 42,
-    downloads: 8,
-  },
-  {
-    id: 5,
-    name: "Mechanical Engineer Resume",
-    lastEdited: "2 weeks ago",
-    status: "Inactive",
-    views: 12,
-    downloads: 2,
-  },
-]
+const fetchIt = async (): Promise<SoftwareEngineerResume[]> => {
+  try {
+    const repo = new SoftwareEngineer();
+    const useCase = new UseCasesRepo(repo);
+    const data = await useCase.getAllResumes();
+    return data ?? [];
+  } catch (error) {
+    console.error("Error fetching resumes:", error);
+    return [];
+  }
+};
 
-export function RecentResumesSection() {
+
+export default function RecentResumesSection({ resumes }: RecentResumesSectionProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -79,21 +66,25 @@ export function RecentResumesSection() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {recentResumes.map((resume) => (
-                <TableRow key={resume.id}>
+              {resumes.map((resume) => (
+                <TableRow key={resume.email}>
                   <TableCell className="font-medium">{resume.name}</TableCell>
-                  <TableCell>{resume.lastEdited}</TableCell>
+                  <TableCell>{resume.Date1 || resume.Dates || "Unknown"}</TableCell>
                   <TableCell>
                     <Badge
                       variant={
-                        resume.status === "Active" ? "default" : resume.status === "Draft" ? "outline" : "secondary"
+                        resume.Certification2 === "Active"
+                          ? "default"
+                          : resume.Certification2 === "Draft"
+                            ? "outline"
+                            : "secondary"
                       }
                     >
-                      {resume.status}
+                      {resume.Certification2 || "Draft"}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right">{resume.views}</TableCell>
-                  <TableCell className="text-right">{resume.downloads}</TableCell>
+                  <TableCell className="text-right">{resume.Certification2 || 0}</TableCell>
+                  <TableCell className="text-right">{resume.Certification2 || 0}</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -132,5 +123,14 @@ export function RecentResumesSection() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const resumes = await fetchIt();
+  return {
+    props: {
+      resumes,
+    },
+  };
+};

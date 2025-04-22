@@ -1,5 +1,6 @@
 import { SoftwareEngineerResume } from "@/types/postData";
 
 export interface ResumeRepo{
-    postData(props: SoftwareEngineerResume):Promise<void>
+    postData(props: SoftwareEngineerResume): Promise<void>
+    getData(): Promise<SoftwareEngineerResume[]>
 }

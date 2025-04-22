@@ -3,11 +3,13 @@
 import { DashboardLayout } from "@/presentation/layouts/dashboard-layout"
 import { DashboardHeader } from "@/presentation/components/dashboard/dashboard-header"
 import { ResumeTemplatesSection } from "@/presentation/components/dashboard/resume-templates-section"
-import { RecentResumesSection } from "@/presentation/components/dashboard/recent-resumes-section"
+
 import { StatsSection } from "@/presentation/components/dashboard/stats-section"
 import { QuickActionsSection } from "@/presentation/components/dashboard/quick-actions-section"
+import RecentResumesSection from "../components/dashboard/recent-resumes-section"
+import { RecentResumesSectionProps } from "@/types/postData"
 
-export function DashboardPage() {
+export default function DashboardPage(resume: RecentResumesSectionProps) {
   return (
     <DashboardLayout>
       <div className="flex flex-col gap-6 p-6 pt-20 md:pt-6">
@@ -15,7 +17,7 @@ export function DashboardPage() {
           <div className=" w-full">
             <QuickActionsSection />
           </div>
-        <RecentResumesSection />
+        <RecentResumesSection resumes={resume.resumes} />
         <ResumeTemplatesSection />
       </div>
     </DashboardLayout>

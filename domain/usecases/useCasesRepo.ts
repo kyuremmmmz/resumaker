@@ -10,4 +10,11 @@ export class UseCasesRepo{
             console.log(error);
         }
     }
+    async getAllResumes() {
+        try {
+            return await this.resumeRepo.getData();
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }

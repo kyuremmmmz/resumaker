@@ -148,8 +148,11 @@ export default function generateOliviaPDF(doc: jsPDF, resumeData: ResumeData, pr
         doc.setFont("helvetica", "bold")
 
         const degree = educationSection.fields.find((f) => f.id === "degree")?.value || ""
-        doc.text(degree, margin, leftColY)
-        leftColY += 5
+        doc.splitTextToSize(degree, colWidth - 20).forEach((line: string) => {
+            doc.text(line, margin, leftColY)
+            leftColY += 5
+        })
+
 
         doc.setFont("helvetica", "normal")
         const university = educationSection.fields.find((f) => f.id === "university")?.value || ""

@@ -18,7 +18,7 @@ export default function generateStefanoPDF(doc: jsPDF, resumeData: ResumeData, p
 
     // Add profile image placeholder (gray circle)
     doc.setFillColor(150, 150, 150) // gray
-    doc.circle(20, 20, 10, "F") // Circle at x=20, y=20, radius=10
+    doc.circle(20, 20, 10, "F")
     if (profileImage) {
         doc.addImage(profileImage, 'JPEG', 10, 10, 20, 20); 
     }
