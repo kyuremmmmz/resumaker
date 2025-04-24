@@ -1,18 +1,18 @@
 
-import generateCatrianaPDF from "@/presentation/hooks/catriana";
-import generateDanielPDF from "@/presentation/hooks/daniel";
-import generateJulianaPDF from "@/presentation/hooks/generateJulianaPDF";
-import generateKathrynPDF from "@/presentation/hooks/kathyryn";
-import generateLornaPDF from "@/presentation/hooks/lorna";
-import generateMargotPDF from "@/presentation/hooks/margot";
-import generateOliviaPDF from "@/presentation/hooks/olivia";
+import generateCatrianaPDF from "@/presentation/hooks/postgenerators/catriana";
+import generateDanielPDF from "@/presentation/hooks/postgenerators/daniel";
+import generateJulianaPDF from "@/presentation/hooks/postgenerators/generateJulianaPDF";
+import generateKathrynPDF from "@/presentation/hooks/postgenerators/kathyryn";
+import generateLornaPDF from "@/presentation/hooks/postgenerators/lorna";
+import generateMargotPDF from "@/presentation/hooks/postgenerators/margot";
+import generateOliviaPDF from "@/presentation/hooks/postgenerators/olivia";
+import generateRachellePDF from "@/presentation/hooks/postgenerators/rachelle";
+import generateSamiraPDF from "@/presentation/hooks/postgenerators/samiraGenerator";
+import generateStefanoPDF from "@/presentation/hooks/postgenerators/stefanoGenerator";
 import generateStefanoPDFPut from "@/presentation/hooks/putgenerators/stefanoGeneratorPut";
-import generateRachellePDF from "@/presentation/hooks/rachelle";
-import generateSamiraPDF from "@/presentation/hooks/samiraGenerator";
-import generateStefanoPDF from "@/presentation/hooks/stefanoGenerator";
 import { ResumeData } from "@/types/initial-data";
 import { SoftwareEngineerResume } from "@/types/postData";
-import jsPDF from "jspdf"
+import jsPDF from "jspdf";
 
 
 function checkForPageBreak(doc: jsPDF, yPos: number, margin: number = 10): number {
@@ -27,7 +27,7 @@ function checkForPageBreak(doc: jsPDF, yPos: number, margin: number = 10): numbe
     return yPos;
 }
 
-export async function generatePDFPut(resumeData: ResumeData, profileImage: string | null, templateName: string, single:SoftwareEngineerResume) {
+export async function generatePDFPut(resumeData: ResumeData, profileImage: string | null, templateName: string, single: SoftwareEngineerResume) {
     const doc = new jsPDF()
 
     const pageHeight = 297
