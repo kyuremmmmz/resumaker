@@ -1,3 +1,4 @@
+import { ResumeData } from "@/types/initial-data";
 import { SoftwareEngineerResume } from "@/types/postData";
 
 export default async function getResumeById(id: string): Promise<SoftwareEngineerResume | null>{

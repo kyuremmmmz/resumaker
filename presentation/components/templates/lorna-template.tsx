@@ -1,17 +1,36 @@
-import Image from "next/image"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Phone, Mail, MapPin, User, Briefcase, GraduationCap, Book } from "lucide-react"
 import { ResumeData } from "@/types/initial-data"
-
+import { SoftwareEngineerResume } from "@/types/postData"
 
 interface TemplateProps {
+  single?: SoftwareEngineerResume
   resumeData: ResumeData
   profileImage: string | null
 }
 
-export default function LornaTemplate({ resumeData, profileImage }: TemplateProps) {
-  const contactSection = resumeData.sections.find((s) => s.id === "contact")
-  const fullName = contactSection?.fields.find((f) => f.id === "fullName")?.value || "Full Name"
-  const jobTitle = contactSection?.fields.find((f) => f.id === "jobTitle")?.value || "Job Title"
+export default function LornaTemplate({ resumeData, profileImage, single }: TemplateProps) {
+  const contactSection = single
+    ? {
+      fields: [
+        { id: "fullName", value: single.name, label: "Full Name" },
+        { id: "jobTitle", value: single.JobTitle, label: "Job Title" },
+        { id: "email", value: single.email, label: "Email" },
+        { id: "phone", value: single.contactNumber, label: "Phone" },
+        { id: "location", value: single.Location, label: "Location" },
+      ],
+      id: "contact",
+      title: "Contact",
+    }
+    : resumeData.sections.find((s) => s.id === "contact")
+
+  const fullName = single
+    ? single.name
+    : contactSection?.fields.find((f) => f.id === "fullName")?.value || "Full Name"
+
+  const jobTitle = single
+    ? single.JobTitle
+    : contactSection?.fields.find((f) => f.id === "jobTitle")?.value || "Job Title"
 
   return (
     <div className="min-h-screen bg-white">
@@ -23,26 +42,17 @@ export default function LornaTemplate({ resumeData, profileImage }: TemplateProp
             <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8">
               <div className="flex flex-col items-center">
                 <div className="w-48 h-48 rounded-full bg-white p-2 mb-4">
-                  <div className="w-full h-full rounded-full overflow-hidden">
-                    {profileImage ? (
-                      <Image
-                        src={profileImage || "/placeholder.svg"}
-                        alt="Profile"
-                        width={200}
-                        height={200}
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full rounded-full bg-gray-300 flex items-center justify-center">
-                        <span className="text-4xl font-bold text-gray-500">
-                          {fullName
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                  <Avatar className="w-full h-full rounded-full">
+                    <AvatarImage src={profileImage || ""} className="object-cover" />
+                    <AvatarFallback className="bg-gray-300 flex items-center justify-center">
+                      <span className="text-4xl font-bold text-gray-500">
+                        {fullName
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("") || "AJ"}
+                      </span>
+                    </AvatarFallback>
+                  </Avatar>
                 </div>
                 <h1 className="text-4xl font-bold text-blue-500 text-center">{fullName}</h1>
                 <h2 className="text-xl text-gray-600 mb-8 text-center">{jobTitle}</h2>
@@ -65,15 +75,27 @@ export default function LornaTemplate({ resumeData, profileImage }: TemplateProp
                 <div className="space-y-3 pl-8">
                   <div className="flex items-center gap-2">
                     <Phone size={16} className="text-blue-500" />
-                    <span>{contactSection?.fields.find((f) => f.id === "phone")?.value}</span>
+                    <span>
+                      {single
+                        ? single.contactNumber
+                        : contactSection?.fields.find((f) => f.id === "phone")?.value}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail size={16} className="text-blue-500" />
-                    <span>{contactSection?.fields.find((f) => f.id === "email")?.value}</span>
+                    <span>
+                      {single
+                        ? single.email
+                        : contactSection?.fields.find((f) => f.id === "email")?.value}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin size={16} className="text-blue-500" />
-                    <span>{contactSection?.fields.find((f) => f.id === "location")?.value}</span>
+                    <span>
+                      {single
+                        ? single.Location
+                        : contactSection?.fields.find((f) => f.id === "location")?.value}
+                    </span>
                   </div>
                 </div>
               </section>
@@ -84,7 +106,9 @@ export default function LornaTemplate({ resumeData, profileImage }: TemplateProp
                   <h3 className="text-xl font-bold text-gray-700">Introduction</h3>
                 </div>
                 <p className="text-gray-600">
-                  {resumeData.sections.find((s) => s.id === "summary")?.fields.find((f) => f.id === "summary")?.value}
+                  {single
+                    ? single.aboutMe
+                    : resumeData.sections.find((s) => s.id === "summary")?.fields.find((f) => f.id === "summary")?.value}
                 </p>
               </section>
 
@@ -107,12 +131,23 @@ export default function LornaTemplate({ resumeData, profileImage }: TemplateProp
                   <h3 className="text-xl font-bold text-gray-700">Skills</h3>
                 </div>
                 <ul className="list-disc pl-10 space-y-2">
-                  {resumeData.sections
-                    .find((s) => s.id === "skills")
-                    ?.fields.flatMap((field) => field.value.split(", "))
-                    .map((skill, i) => (
-                      <li key={i}>{skill}</li>
-                    ))}
+                  {single ? (
+                    <>
+                      {single.techskills?.split(", ").map((skill, i) => (
+                        <li key={`tech-${i}`}>{skill.replaceAll('"', "")}</li>
+                      ))}
+                      {single.softskills?.split(", ").map((skill, i) => (
+                        <li key={`soft-${i}`}>{skill.replaceAll('"', "")}</li>
+                      ))}
+                    </>
+                  ) : (
+                    resumeData.sections
+                      .find((s) => s.id === "skills")
+                      ?.fields.flatMap((field) => field.value.split(", "))
+                      .map((skill, i) => (
+                        <li key={i}>{skill}</li>
+                      ))
+                  )}
                 </ul>
               </section>
             </div>
@@ -124,31 +159,38 @@ export default function LornaTemplate({ resumeData, profileImage }: TemplateProp
                   <GraduationCap className="text-blue-500" />
                   <h3 className="text-xl font-bold text-gray-700">Education</h3>
                 </div>
-
                 <div className="space-y-8">
-                  <div className="relative border-l-2 border-blue-200 pl-6">
-                    <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500"></div>
-                    <h4 className="text-lg font-bold">
-                      {
-                        resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "degree")
-                          ?.value
-                      }
-                    </h4>
-                    <p className="text-gray-600 italic">
-                      {
-                        resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "university")
-                          ?.value
-                      }
-                    </p>
-                    <div className="flex justify-between">
-                      <p className="text-gray-500">
-                        {
-                          resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "eduDates")
-                            ?.value
-                        }
-                      </p>
+                  {single ? (
+                    <div className="relative border-l-2 border-blue-200 pl-6">
+                      <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500"></div>
+                      <h4 className="text-lg font-bold">{single.degree}</h4>
+                      <p className="text-gray-600 italic">{single.University}</p>
+                      <div className="flex justify-between">
+                        <p className="text-gray-500">{single.DateEnded}</p>
+                      </div>
+                      {single.gpa && <p className="text-gray-600">GPA: {single.gpa}</p>}
                     </div>
-                  </div>
+                  ) : (
+                    <div className="relative border-l-2 border-blue-200 pl-6">
+                      <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500"></div>
+                      <h4 className="text-lg font-bold">
+                        {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "degree")?.value}
+                      </h4>
+                      <p className="text-gray-600 italic">
+                        {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "university")?.value}
+                      </p>
+                      <div className="flex justify-between">
+                        <p className="text-gray-500">
+                          {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "eduDates")?.value}
+                        </p>
+                      </div>
+                      {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "gpa")?.value && (
+                        <p className="text-gray-600">
+                          GPA: {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "gpa")?.value}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </section>
 
@@ -157,33 +199,44 @@ export default function LornaTemplate({ resumeData, profileImage }: TemplateProp
                   <Briefcase className="text-blue-500" />
                   <h3 className="text-xl font-bold text-gray-700">Work Experience</h3>
                 </div>
-
                 <div className="space-y-8">
-                  {resumeData.sections
-                    .find((s) => s.id === "experience")
-                    ?.fields.filter((f) => f.id.startsWith("jobTitle"))
-                    .map((titleField) => {
-                      const index = titleField.id.replace("jobTitle", "")
-                      const experienceSection = resumeData.sections.find((s) => s.id === "experience")
+                  {single ? (
+                    <div className="relative border-l-2 border-blue-200 pl-6">
+                      <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500"></div>
+                      <h4 className="text-lg font-bold">{single.PreviousJobTitle}</h4>
+                      <p className="text-gray-600 italic">{single.PreviousCompany}</p>
+                      <div className="flex justify-between">
+                        <p className="text-gray-500">{single.Date2}</p>
+                      </div>
+                      <p className="mt-2 text-gray-600">{single.PreviousDescription}</p>
+                    </div>
+                  ) : (
+                    resumeData.sections
+                      .find((s) => s.id === "experience")
+                      ?.fields.filter((f) => f.id.startsWith("jobTitle"))
+                      .map((titleField) => {
+                        const index = titleField.id.replace("jobTitle", "")
+                        const experienceSection = resumeData.sections.find((s) => s.id === "experience")
 
-                      return (
-                        <div key={titleField.id} className="relative border-l-2 border-blue-200 pl-6">
-                          <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500"></div>
-                          <h4 className="text-lg font-bold">{titleField.value}</h4>
-                          <p className="text-gray-600 italic">
-                            {experienceSection?.fields.find((f) => f.id === `company${index}`)?.value}
-                          </p>
-                          <div className="flex justify-between">
-                            <p className="text-gray-500">
-                              {experienceSection?.fields.find((f) => f.id === `dates${index}`)?.value}
+                        return (
+                          <div key={titleField.id} className="relative border-l-2 border-blue-200 pl-6">
+                            <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500"></div>
+                            <h4 className="text-lg font-bold">{titleField.value}</h4>
+                            <p className="text-gray-600 italic">
+                              {experienceSection?.fields.find((f) => f.id === `company${index}`)?.value}
+                            </p>
+                            <div className="flex justify-between">
+                              <p className="text-gray-500">
+                                {experienceSection?.fields.find((f) => f.id === `dates${index}`)?.value}
+                              </p>
+                            </div>
+                            <p className="mt-2 text-gray-600">
+                              {experienceSection?.fields.find((f) => f.id === `description${index}`)?.value}
                             </p>
                           </div>
-                          <p className="mt-2 text-gray-600">
-                            {experienceSection?.fields.find((f) => f.id === `description${index}`)?.value}
-                          </p>
-                        </div>
-                      )
-                    })}
+                        )
+                      })
+                  )}
                 </div>
               </section>
 
@@ -193,21 +246,30 @@ export default function LornaTemplate({ resumeData, profileImage }: TemplateProp
                   <h3 className="text-xl font-bold text-gray-700">Certifications</h3>
                 </div>
                 <div className="space-y-4">
-                  {resumeData.sections
-                    .find((s) => s.id === "certifications")
-                    ?.fields.filter((f) => f.id.startsWith("cert") && !f.id.startsWith("certDate"))
-                    .map((cert) => {
-                      const index = cert.id.replace("cert", "")
-                      const date = resumeData.sections
-                        .find((s) => s.id === "certifications")
-                        ?.fields.find((f) => f.id === `certDate${index}`)?.value
-                      return (
-                        <div key={cert.id}>
-                          <p className="font-bold">{cert.value}</p>
-                          <p className="text-gray-600">{date}</p>
-                        </div>
-                      )
-                    })}
+                  {single ? (
+                    single.Certification1 && (
+                      <div>
+                        <p className="font-bold">{single.Certification1}</p>
+                        <p className="text-gray-600">{single.Date1}</p>
+                      </div>
+                    )
+                  ) : (
+                    resumeData.sections
+                      .find((s) => s.id === "certifications")
+                      ?.fields.filter((f) => f.id.startsWith("cert") && !f.id.startsWith("certDate"))
+                      .map((cert) => {
+                        const index = cert.id.replace("cert", "")
+                        const date = resumeData.sections
+                          .find((s) => s.id === "certifications")
+                          ?.fields.find((f) => f.id === `certDate${index}`)?.value
+                        return (
+                          <div key={cert.id}>
+                            <p className="font-bold">{cert.value}</p>
+                            <p className="text-gray-600">{date}</p>
+                          </div>
+                        )
+                      })
+                  )}
                 </div>
               </section>
             </div>

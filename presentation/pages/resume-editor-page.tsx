@@ -17,9 +17,11 @@ import { Label } from "@/components/ui/label"
 import useEditorProps from "../hooks/useEditorprops"
 import ResumeEditor from "../components/resume-editor"
 import { useRouter } from "next/navigation"
+import { SoftwareEngineerResume } from "@/types/postData"
+import useEditorPutProps from "../hooks/useEditorPutProps"
 
 
-export default function ResumePage() {
+export default function ResumePage({resume}: {resume:SoftwareEngineerResume}) {
   const {
     resumeData,
     setResumeData,
@@ -38,8 +40,8 @@ export default function ResumePage() {
     handleDownload,
     handleSendEmail,
     templates,
-    ActiveTemplateComponent,
-  } = useEditorProps();
+    ActiveTemplateComponent
+  } = useEditorProps({resume  });
   const router = useRouter();
   return (
     <div className="container mx-auto py-8">

@@ -1,4 +1,5 @@
 import { SoftwareEngineer } from "@/Data/repositories/repositoryImpl";
+import { ResumeData } from "@/types/initial-data";
 import { SoftwareEngineerResume } from "@/types/postData";
 
 export class UseCasesRepo{
@@ -15,6 +16,17 @@ export class UseCasesRepo{
             return await this.resumeRepo.getData();
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    async getResumeById(id: string): Promise<SoftwareEngineerResume> { 
+        try {
+            const resume = await this.resumeRepo.getById(id);
+            return resume;
+        } catch (error) {
+            console.log(error);
+            throw new Error("");
+            
         }
     }
 }

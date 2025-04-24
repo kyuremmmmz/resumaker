@@ -1,17 +1,37 @@
-import Image from "next/image"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Phone, Mail, Globe, MapPin } from "lucide-react"
 import { ResumeData } from "@/types/initial-data"
-
+import { SoftwareEngineerResume } from "@/types/postData"
 
 interface TemplateProps {
+  single?: SoftwareEngineerResume
   resumeData: ResumeData
   profileImage: string | null
 }
 
-export default function OliviaTemplate({ resumeData, profileImage }: TemplateProps) {
-  const contactSection = resumeData.sections.find((s) => s.id === "contact")
-  const fullName = contactSection?.fields.find((f) => f.id === "fullName")?.value || "Full Name"
-  const jobTitle = contactSection?.fields.find((f) => f.id === "jobTitle")?.value || "Job Title"
+export default function OliviaTemplate({ resumeData, profileImage, single }: TemplateProps) {
+  const contactSection = single
+    ? {
+      fields: [
+        { id: "fullName", value: single.name, label: "Full Name" },
+        { id: "jobTitle", value: single.JobTitle, label: "Job Title" },
+        { id: "email", value: single.email, label: "Email" },
+        { id: "phone", value: single.contactNumber, label: "Phone" },
+        { id: "location", value: single.Location, label: "Location" },
+        { id: "website", value: single.email, label: "Website" }, // Placeholder, adjust if website is available
+      ],
+      id: "contact",
+      title: "Contact",
+    }
+    : resumeData.sections.find((s) => s.id === "contact")
+
+  const fullName = single
+    ? single.name
+    : contactSection?.fields.find((f) => f.id === "fullName")?.value || "Full Name"
+
+  const jobTitle = single
+    ? single.JobTitle
+    : contactSection?.fields.find((f) => f.id === "jobTitle")?.value || "Job Title"
 
   return (
     <div className="min-h-screen bg-[#f0e9e5]">
@@ -20,24 +40,17 @@ export default function OliviaTemplate({ resumeData, profileImage }: TemplatePro
           {/* Left Column */}
           <div className="border border-gray-300 p-6 bg-white">
             <div className="flex justify-center mb-8">
-              {profileImage ? (
-                <Image
-                  src={profileImage || "/placeholder.svg"}
-                  alt="Profile"
-                  width={200}
-                  height={200}
-                  className="object-cover rounded-full"
-                />
-              ) : (
-                <div className="w-48 h-48 rounded-full bg-gray-300 flex items-center justify-center">
+              <Avatar className="w-48 h-48 rounded-full">
+                <AvatarImage src={profileImage || ""} className="object-cover" />
+                <AvatarFallback className="bg-gray-300 flex items-center justify-center">
                   <span className="text-4xl font-bold text-gray-500">
                     {fullName
                       .split(" ")
                       .map((n) => n[0])
-                      .join("")}
+                      .join("") || "AJ"}
                   </span>
-                </div>
-              )}
+                </AvatarFallback>
+              </Avatar>
             </div>
 
             <div className="space-y-4 mb-8">
@@ -45,60 +58,125 @@ export default function OliviaTemplate({ resumeData, profileImage }: TemplatePro
                 <div className="bg-gray-200 p-1 rounded">
                   <Phone size={16} className="text-gray-700" />
                 </div>
-                <span>{contactSection?.fields.find((f) => f.id === "phone")?.value}</span>
+                <span>
+                  {single
+                    ? single.contactNumber
+                    : contactSection?.fields.find((f) => f.id === "phone")?.value}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="bg-gray-200 p-1 rounded">
                   <Mail size={16} className="text-gray-700" />
                 </div>
-                <span>{contactSection?.fields.find((f) => f.id === "email")?.value}</span>
+                <span>
+                  {single
+                    ? single.email
+                    : contactSection?.fields.find((f) => f.id === "email")?.value}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="bg-gray-200 p-1 rounded">
                   <Globe size={16} className="text-gray-700" />
                 </div>
-                <span>{contactSection?.fields.find((f) => f.id === "website")?.value}</span>
+                <span>
+                  {single
+                    ? single.email // Placeholder, adjust if website is available
+                    : contactSection?.fields.find((f) => f.id === "website")?.value}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="bg-gray-200 p-1 rounded">
                   <MapPin size={16} className="text-gray-700" />
                 </div>
-                <span>{contactSection?.fields.find((f) => f.id === "location")?.value}</span>
+                <span>
+                  {single
+                    ? single.Location
+                    : contactSection?.fields.find((f) => f.id === "location")?.value}
+                </span>
               </div>
             </div>
 
             <div className="mb-8">
               <h2 className="text-2xl font-bold mb-4 bg-[#f0e9e5] p-2">Education</h2>
               <div className="mb-4">
-                <h3 className="text-lg font-bold">
-                  {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "degree")?.value}
-                </h3>
-                <p>
-                  {
-                    resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "university")
-                      ?.value
-                  }
-                </p>
-                <p>
-                  {
-                    resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "eduDates")
-                      ?.value
-                  }
-                </p>
+                {single ? (
+                  <>
+                    <h3 className="text-lg font-bold">{single.degree}</h3>
+                    <p>{single.University}</p>
+                    <p>{single.DateEnded}</p>
+                    {single.gpa && <p>GPA: {single.gpa}</p>}
+                  </>
+                ) : (
+                  <>
+                    <h3 className="text-lg font-bold">
+                      {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "degree")?.value}
+                    </h3>
+                    <p>
+                      {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "university")?.value}
+                    </p>
+                    <p>
+                      {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "eduDates")?.value}
+                    </p>
+                    {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "gpa")?.value && (
+                      <p>
+                        GPA: {resumeData.sections.find((s) => s.id === "education")?.fields.find((f) => f.id === "gpa")?.value}
+                      </p>
+                    )}
+                  </>
+                )}
               </div>
             </div>
 
-            <div>
+            <div className="mb-8">
               <h2 className="text-2xl font-bold mb-4 bg-[#f0e9e5] p-2">Skills</h2>
               <ul className="space-y-3">
-                {resumeData.sections
-                  .find((s) => s.id === "skills")
-                  ?.fields.flatMap((field) => field.value.split(", "))
-                  .map((skill, i) => (
-                    <li key={i}>{skill}</li>
-                  ))}
+                {single ? (
+                  <>
+                    {single.techskills?.split(", ").map((skill, i) => (
+                      <li key={`tech-${i}`}>{skill.replaceAll('"', "")}</li>
+                    ))}
+                    {single.softskills?.split(", ").map((skill, i) => (
+                      <li key={`soft-${i}`}>{skill.replaceAll('"', "")}</li>
+                    ))}
+                  </>
+                ) : (
+                  resumeData.sections
+                    .find((s) => s.id === "skills")
+                    ?.fields.flatMap((field) => field.value.split(", "))
+                    .map((skill, i) => (
+                      <li key={i}>{skill}</li>
+                    ))
+                )}
               </ul>
             </div>
+
+            {(single?.Certification1 || resumeData.sections.find((s) => s.id === "certifications")) && (
+              <div>
+                <h2 className="text-2xl font-bold mb-4 bg-[#f0e9e5] p-2">Certifications</h2>
+                <ul className="space-y-3">
+                  {single ? (
+                    <li>
+                      {single.Certification1} {single.Date1 && `(${single.Date1})`}
+                    </li>
+                  ) : (
+                    resumeData.sections
+                      .find((s) => s.id === "certifications")
+                      ?.fields.filter((f) => f.id.startsWith("cert") && !f.id.startsWith("certDate"))
+                      .map((cert) => {
+                        const index = cert.id.replace("cert", "")
+                        const date = resumeData.sections
+                          .find((s) => s.id === "certifications")
+                          ?.fields.find((f) => f.id === `certDate${index}`)?.value
+                        return (
+                          <li key={cert.id}>
+                            {cert.value} {date && `(${date})`}
+                          </li>
+                        )
+                      })
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* Right Column */}
@@ -128,7 +206,9 @@ export default function OliviaTemplate({ resumeData, profileImage }: TemplatePro
                   <h3 className="text-xl font-bold">Profile</h3>
                 </div>
                 <p className="text-gray-700">
-                  {resumeData.sections.find((s) => s.id === "summary")?.fields.find((f) => f.id === "summary")?.value}
+                  {single
+                    ? single.aboutMe
+                    : resumeData.sections.find((s) => s.id === "summary")?.fields.find((f) => f.id === "summary")?.value}
                 </p>
               </div>
 
@@ -154,29 +234,41 @@ export default function OliviaTemplate({ resumeData, profileImage }: TemplatePro
                 </div>
 
                 <div className="border-l-2 border-gray-300 pl-6 ml-3 space-y-8">
-                  {resumeData.sections
-                    .find((s) => s.id === "experience")
-                    ?.fields.filter((f) => f.id.startsWith("jobTitle"))
-                    .map((titleField, idx) => {
-                      const index = titleField.id.replace("jobTitle", "")
-                      const experienceSection = resumeData.sections.find((s) => s.id === "experience")
+                  {single ? (
+                    <div className="relative">
+                      <div className="absolute -left-[31px] top-1 w-5 h-5 rounded-full bg-gray-300"></div>
+                      <div className="flex justify-between mb-1">
+                        <h4 className="text-lg font-bold">{single.PreviousJobTitle}</h4>
+                        <span className="text-gray-600">{single.Date2}</span>
+                      </div>
+                      <p className="font-medium mb-2">{single.PreviousCompany}</p>
+                      <p>{single.PreviousDescription}</p>
+                    </div>
+                  ) : (
+                    resumeData.sections
+                      .find((s) => s.id === "experience")
+                      ?.fields.filter((f) => f.id.startsWith("jobTitle"))
+                      .map((titleField) => {
+                        const index = titleField.id.replace("jobTitle", "")
+                        const experienceSection = resumeData.sections.find((s) => s.id === "experience")
 
-                      return (
-                        <div key={titleField.id} className="relative">
-                          <div className="absolute -left-[31px] top-1 w-5 h-5 rounded-full bg-gray-300"></div>
-                          <div className="flex justify-between mb-1">
-                            <h4 className="text-lg font-bold">{titleField.value}</h4>
-                            <span className="text-gray-600">
-                              {experienceSection?.fields.find((f) => f.id === `dates${index}`)?.value}
-                            </span>
+                        return (
+                          <div key={titleField.id} className="relative">
+                            <div className="absolute -left-[31px] top-1 w-5 h-5 rounded-full bg-gray-300"></div>
+                            <div className="flex justify-between mb-1">
+                              <h4 className="text-lg font-bold">{titleField.value}</h4>
+                              <span className="text-gray-600">
+                                {experienceSection?.fields.find((f) => f.id === `dates${index}`)?.value}
+                              </span>
+                            </div>
+                            <p className="font-medium mb-2">
+                              {experienceSection?.fields.find((f) => f.id === `company${index}`)?.value}
+                            </p>
+                            <p>{experienceSection?.fields.find((f) => f.id === `description${index}`)?.value}</p>
                           </div>
-                          <p className="font-medium mb-2">
-                            {experienceSection?.fields.find((f) => f.id === `company${index}`)?.value}
-                          </p>
-                          <p>{experienceSection?.fields.find((f) => f.id === `description${index}`)?.value}</p>
-                        </div>
-                      )
-                    })}
+                        )
+                      })
+                  )}
                 </div>
               </div>
             </div>

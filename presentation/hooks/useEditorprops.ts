@@ -15,8 +15,10 @@ import SamiraTemplate from "../components/templates/samira-template"
 import StefanoTemplate from "../components/templates/stefano-template"
 import postDataService from "@/Data/api/post"
 import { SoftwareEngineerResume } from "@/types/postData"
+import { generatePDFPut } from "@/Core/lib/pdf-generator-put"
 
-export default function useEditorProps() {
+
+export default function useEditorProps({resume}:{resume: SoftwareEngineerResume}) {
     const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData)
     const [profileImage, setProfileImage] = useState<string | null>(null)
     const [previewVisible, setPreviewVisible] = useState(true)

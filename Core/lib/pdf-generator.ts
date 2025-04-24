@@ -10,6 +10,7 @@ import generateRachellePDF from "@/presentation/hooks/rachelle";
 import generateSamiraPDF from "@/presentation/hooks/samiraGenerator";
 import generateStefanoPDF from "@/presentation/hooks/stefanoGenerator";
 import { ResumeData } from "@/types/initial-data";
+import { SoftwareEngineerResume } from "@/types/postData";
 import jsPDF from "jspdf"
 
 

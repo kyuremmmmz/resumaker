@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Edit, Download, Eye, MoreHorizontal, Trash, Search, PlusCircle, Filter, SortDesc } from "lucide-react"
 import TabsContentgrid from "../components/tabs/tabsContentgrid"
+import { RecentResumesSectionProps } from "@/types/postData"
 
 
-export function MyResumesPage() {
+export default function MyResumesPage({resumes}: RecentResumesSectionProps) {
   return (
     <DashboardLayout>
       <div className="flex flex-col gap-6 p-6 pt-20 md:pt-6">
@@ -52,7 +53,7 @@ export function MyResumesPage() {
             <TabsTrigger value="all">All Resumes</TabsTrigger>
             <TabsTrigger value="draft">Drafts</TabsTrigger>
           </TabsList>
-          <TabsContentgrid/>
+          <TabsContentgrid resumes={resumes}/>
         </Tabs>
       </div>
     </DashboardLayout>

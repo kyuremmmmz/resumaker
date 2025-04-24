@@ -1,11 +1,12 @@
 import { ResumeData } from "@/types/initial-data"
+import { SoftwareEngineerResume } from "@/types/postData"
 import jsPDF from "jspdf"
 
-export default function generateStefanoPDF(doc: jsPDF, resumeData: ResumeData, profileImage: string | null) {
+export default function generateStefanoPDFPut(doc: jsPDF, resumeData: ResumeData, profileImage: string | null, resume:SoftwareEngineerResume) {
     // Page dimensions and margins
     const pageWidth = 210 // A4 width in mm
     const margin = 10
-    const columnWidth = (pageWidth - 3 * 15) / 2 
+    const columnWidth = (pageWidth - 3 * margin) / 2 
 
     // Dark header
     doc.setFillColor(31, 41, 55) // dark gray
@@ -13,8 +14,8 @@ export default function generateStefanoPDF(doc: jsPDF, resumeData: ResumeData, p
 
     // Get contact info
     const contactSection = resumeData.sections.find((s) => s.id === "contact")
-    const fullName = contactSection?.fields.find((f) => f.id === "fullName")?.value || "Full Name"
-    const jobTitle = contactSection?.fields.find((f) => f.id === "jobTitle")?.value || "Job Title"
+    const fullName = resume.name;
+    const jobTitle = resume.JobTitle;
 
     // Add profile image placeholder (gray circle)
     doc.setFillColor(150, 150, 150) // gray
@@ -28,7 +29,7 @@ export default function generateStefanoPDF(doc: jsPDF, resumeData: ResumeData, p
     doc.setFontSize(16)
     doc.text(fullName, 40, 15)
     doc.setFontSize(12)
-    doc.text(jobTitle, 40, 25)
+    doc.text(String(jobTitle), 40, 25)
 
     const yOffset = 50 // Start content below header
 
@@ -57,7 +58,7 @@ export default function generateStefanoPDF(doc: jsPDF, resumeData: ResumeData, p
 
             if (section.id === "summary") {
                 section.fields.forEach((field) => {
-                    const textLines = doc.splitTextToSize(field.value, columnWidth)
+                    const textLines = doc.splitTextToSize(String(resume.aboutMe), columnWidth)
                     textLines.forEach((line: string) => {
                         maxLeftYOffset += 5
                         doc.text(line, margin, maxLeftYOffset)
@@ -131,7 +132,7 @@ export default function generateStefanoPDF(doc: jsPDF, resumeData: ResumeData, p
                 doc.setFont("helvetica", "normal")
                 doc.text(`${university}, ${dates}`, xPos, maxRightYOffset)
 
-                const gpa = section.fields.find((f) => f.id === "gpa")?.value
+                const gpa = resume.gpa;
                 if (gpa) {
                     maxRightYOffset += 5
                     doc.text(`GPA: ${gpa}`, xPos, maxRightYOffset)
@@ -143,19 +144,7 @@ export default function generateStefanoPDF(doc: jsPDF, resumeData: ResumeData, p
                     doc.text(`${field.label}:`, xPos, maxRightYOffset)
 
                     const skillsArray = field.value.split(", ")
-                    let skillText = ""
-
-                    skillsArray.forEach((skill, index) => {
-                        if (index % 3 === 0 && index > 0) {
-                            maxRightYOffset += 5
-                            doc.setFont("helvetica", "normal")
-                            doc.text(skillText, xPos, maxRightYOffset)
-                            skillText = skill
-                        } else {
-                            if (skillText) skillText += ", "
-                            skillText += skill
-                        }
-                    })
+                    let skillText = resume.softskills?.replaceAll('""', "")
 
                     if (skillText) {
                         maxRightYOffset += 5
@@ -176,6 +165,6 @@ export default function generateStefanoPDF(doc: jsPDF, resumeData: ResumeData, p
                 })
             }
 
-            maxRightYOffset += 10 // Space between sections
+            maxRightYOffset += 10
         })
 }

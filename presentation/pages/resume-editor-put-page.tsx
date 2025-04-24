@@ -15,14 +15,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import useEditorProps from "../hooks/useEditorprops"
-import ResumeEditor from "../components/resume-editor"
 import { useRouter } from "next/navigation"
 import ResumeEditorPut from "../components/resume-editor-put"
-import { SoftwareEngineerResumeByFields } from "@/types/postData"
-import useEditorPropsPut from "../hooks/useEditorpropsPut"
+import { SoftwareEngineerResume } from "@/types/postData"
+import useEditorPutProps from "../hooks/useEditorPutProps"
 
 
-export default function ResumePagePut(resumes: SoftwareEngineerResumeByFields) {
+export default function ResumePagePut({resume}: {resume:SoftwareEngineerResume}) {
   const {
     resumeData,
     setResumeData,
@@ -38,11 +37,11 @@ export default function ResumePagePut(resumes: SoftwareEngineerResumeByFields) {
     setEmailDialogOpen,
     emailAddress,
     setEmailAddress,
-    handleDownload,
+    handleDownloadPut,
     handleSendEmail,
     templates,
     ActiveTemplateComponent,
-  } = useEditorPropsPut(resumes);
+  } = useEditorPutProps({resume});
   const router = useRouter();
   return (
     <div className="container mx-auto py-8">
@@ -54,7 +53,7 @@ export default function ResumePagePut(resumes: SoftwareEngineerResumeByFields) {
               {previewVisible ? <EyeOff className="mr-2 h-4 w-4" /> : <Eye className="mr-2 h-4 w-4" />}
               {previewVisible ? "Hide Preview" : "Show Preview"}
             </Button>
-            <Button onClick={handleDownload} disabled={isDownloading}>
+                <Button onClick={handleDownloadPut} disabled={isDownloading}>
               <Download className="mr-2 h-4 w-4" />
               {isDownloading ? "Generating PDF..." : "Download PDF"}
             </Button>
@@ -81,20 +80,14 @@ export default function ResumePagePut(resumes: SoftwareEngineerResumeByFields) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Editor Panel */}
-          <ResumeEditorPut
-            resumes={resumes}
-            resumeData={resumeData}
-            setResumeData={setResumeData}
-            profileImage={profileImage}
-            setProfileImage={setProfileImage}
-          />
+          <ResumeEditorPut resume={resume}  />
 
           {/* Preview Panel */}
           {previewVisible && (
             <div className="sticky top-4">
               <Card className="overflow-hidden">
                 <CardContent className="p-0">
-                  <ActiveTemplateComponent resumeData={resumeData} profileImage={profileImage} />
+                  <ActiveTemplateComponent single={resume} resumeData={resumeData} profileImage={profileImage} />
                 </CardContent>
               </Card>
             </div>

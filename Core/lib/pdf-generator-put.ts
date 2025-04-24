@@ -6,10 +6,12 @@ import generateKathrynPDF from "@/presentation/hooks/kathyryn";
 import generateLornaPDF from "@/presentation/hooks/lorna";
 import generateMargotPDF from "@/presentation/hooks/margot";
 import generateOliviaPDF from "@/presentation/hooks/olivia";
+import generateStefanoPDFPut from "@/presentation/hooks/putgenerators/stefanoGeneratorPut";
 import generateRachellePDF from "@/presentation/hooks/rachelle";
 import generateSamiraPDF from "@/presentation/hooks/samiraGenerator";
 import generateStefanoPDF from "@/presentation/hooks/stefanoGenerator";
 import { ResumeData } from "@/types/initial-data";
+import { SoftwareEngineerResume } from "@/types/postData";
 import jsPDF from "jspdf"
 
 
@@ -25,7 +27,7 @@ function checkForPageBreak(doc: jsPDF, yPos: number, margin: number = 10): numbe
     return yPos;
 }
 
-export async function generatePDFPut(resumeData: ResumeData, profileImage: string | null, templateName: string) {
+export async function generatePDFPut(resumeData: ResumeData, profileImage: string | null, templateName: string, single:SoftwareEngineerResume) {
     const doc = new jsPDF()
 
     const pageHeight = 297
@@ -38,7 +40,7 @@ export async function generatePDFPut(resumeData: ResumeData, profileImage: strin
 
     switch (templateName) {
         case "stefano":
-            generateStefanoPDF(doc, resumeData, profileImage)
+            generateStefanoPDFPut(doc, resumeData, profileImage, single)
             break
         case "samira":
             generateSamiraPDF(doc, resumeData, profileImage)
@@ -74,7 +76,7 @@ export async function generatePDFPut(resumeData: ResumeData, profileImage: strin
     doc.save(`resume-${templateName}-template.pdf`)
 }
 
-export async function sendResumeByEmailPut(resumeData: ResumeData, profileImage: string | null, templateName: string, email: string) {
+export async function sendResumeByEmail(resumeData: ResumeData, profileImage: string | null, templateName: string, email: string) {
     try {
         const doc = new jsPDF();
 

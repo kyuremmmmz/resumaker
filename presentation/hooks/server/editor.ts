@@ -41,6 +41,6 @@ export default function mapResumeDataToSoftwareEngineerResume(resumeData: Resume
         DateEnded: getFieldValue('education', 'eduDates'),
         gpa: getFieldValue('education', 'gpa'),
         address: getFieldValue('contact', 'address'),
-    };
+};
 };
 

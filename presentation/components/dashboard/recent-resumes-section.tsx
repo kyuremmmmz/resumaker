@@ -67,7 +67,7 @@ export default function RecentResumesSection({ resumes }: RecentResumesSectionPr
             </TableHeader>
             <TableBody>
               {resumes.map((resume) => (
-                <TableRow key={resume.email}>
+                <TableRow key={resume.id.toString()}>
                   <TableCell className="font-medium">{resume.name}</TableCell>
                   <TableCell>{resume.Date1 || resume.Dates || "Unknown"}</TableCell>
                   <TableCell>
