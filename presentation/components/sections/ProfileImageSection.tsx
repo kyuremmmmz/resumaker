@@ -11,12 +11,8 @@ import React from 'react'
 
 function ProfileImageSection({ resume }: { resume: SoftwareEngineerResume }) {
     const {
-        handleInputChange,
         handleImageUpload,
-        handleSubmit,
-        setFormData,
         formData,
-        setProfileImagePreview,
         profileImagePreview
     } = useEditorPutProps({ resume:resume })
   return (
