@@ -9,6 +9,13 @@ import generateOliviaPDF from "@/presentation/hooks/postgenerators/olivia";
 import generateRachellePDF from "@/presentation/hooks/postgenerators/rachelle";
 import generateSamiraPDF from "@/presentation/hooks/postgenerators/samiraGenerator";
 import generateStefanoPDF from "@/presentation/hooks/postgenerators/stefanoGenerator";
+import generateCatrianaPDFPut from "@/presentation/hooks/putgenerators/catrianaPut";
+import generateDanielPDFPut from "@/presentation/hooks/putgenerators/danielPut";
+import generateJulianaPDFPut from "@/presentation/hooks/putgenerators/generateJulianaPDFPut";
+import generateKathrynPDFPut from "@/presentation/hooks/putgenerators/kathyrynPut";
+import generateLornaPDFPut from "@/presentation/hooks/putgenerators/lornaPut";
+import generateMargotPDFPut from "@/presentation/hooks/putgenerators/margotPut";
+import generateOliviaPDFPut from "@/presentation/hooks/putgenerators/oliviaPut";
 import generateRachellePDFPut from "@/presentation/hooks/putgenerators/rachellePut";
 import generateSamiraPDFPut from "@/presentation/hooks/putgenerators/samiraGeneratorPut";
 import generateStefanoPDFPut from "@/presentation/hooks/putgenerators/stefanoGeneratorPut";
@@ -48,28 +55,28 @@ export async function generatePDFPut(resumeData: ResumeData, profileImage: strin
             generateSamiraPDFPut(doc, resumeData, profileImage, single)
             break
         case "kathryn":
-            generateKathrynPDF(doc, resumeData, profileImage)
+            generateKathrynPDFPut(doc, resumeData, profileImage, single)
             break
         case "olivia":
-            generateOliviaPDF(doc, resumeData, profileImage)
+            generateOliviaPDFPut(doc, resumeData, profileImage, single)
             break
         case "lorna":
-            generateLornaPDF(doc, resumeData, profileImage)
+            generateLornaPDFPut(doc, resumeData, profileImage, single)
             break
         case "margot":
-            generateMargotPDF(doc, resumeData, profileImage)
+            generateMargotPDFPut(doc, resumeData, profileImage, single)
             break
         case "rachelle":
             generateRachellePDFPut(doc, resumeData, profileImage,single)
             break
         case "daniel":
-            generateDanielPDF(doc, resumeData, profileImage)
+            generateDanielPDFPut(doc, resumeData, profileImage, single)
             break
         case "catriana":
-            generateCatrianaPDF(doc, resumeData, profileImage)
+            generateCatrianaPDFPut(doc, resumeData, profileImage, single)
             break
         case "juliana":
-            generateJulianaPDF(doc, resumeData, profileImage)
+            generateJulianaPDFPut(doc, resumeData, profileImage,single)
             break
         default:
             generateStefanoPDF(doc, resumeData, profileImage)

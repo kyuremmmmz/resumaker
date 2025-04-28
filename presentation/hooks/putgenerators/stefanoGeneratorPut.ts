@@ -35,7 +35,7 @@ export default function generateStefanoPDFPut(doc: jsPDF, resumeData: ResumeData
 
     // Define left and right column sections
     const leftColumnSections = ["summary", "experience"]
-    const rightColumnSections = ["contact", "education", "skills", "certifications", "languages"]
+    const rightColumnSections = ["contact", "education", "skills", "certifications"]
 
     // Track maximum y-position for each column
     let maxLeftYOffset = yOffset
@@ -50,7 +50,7 @@ export default function generateStefanoPDFPut(doc: jsPDF, resumeData: ResumeData
             doc.setFontSize(12)
             doc.setFont("helvetica", "bold")
             doc.text(section.title, margin, maxLeftYOffset)
-            maxLeftYOffset += 6
+            maxLeftYOffset += 1
 
             // Section content
             doc.setFont("helvetica", "normal")
@@ -113,15 +113,39 @@ export default function generateStefanoPDFPut(doc: jsPDF, resumeData: ResumeData
             doc.setFontSize(10)
 
             if (section.id === "contact") {
-                section.fields.forEach((field) => {
+                maxRightYOffset += 5
+                    doc.setFont("helvetica", "bold")
+                    doc.text(`Full Name:`, xPos, maxRightYOffset)
+                    doc.setFont("helvetica", "normal")
+                    doc.text(resume.name, xPos + 25, maxRightYOffset)
                     maxRightYOffset += 5
                     doc.setFont("helvetica", "bold")
-                    doc.text(`${field.label}:`, xPos, maxRightYOffset)
+                    doc.text(`Job Title:`, xPos, maxRightYOffset)
                     doc.setFont("helvetica", "normal")
-                    doc.text(field.value, xPos + 25, maxRightYOffset)
-                })
+                    doc.text(`${resume.JobTitle}`, xPos + 25, maxRightYOffset)
+                    maxRightYOffset += 5
+                    doc.setFont("helvetica", "bold")
+                    doc.text(`Email:`, xPos, maxRightYOffset)
+                    doc.setFont("helvetica", "normal")
+                    doc.text(`${resume.email}`, xPos + 25, maxRightYOffset)
+                    maxRightYOffset += 5
+                    doc.setFont("helvetica", "bold")
+                    doc.text(`Phone:`, xPos, maxRightYOffset)
+                    doc.setFont("helvetica", "normal")
+                    doc.text(`${resume.contactNumber}`, xPos + 25, maxRightYOffset)
+                    maxRightYOffset += 5
+                    doc.setFont("helvetica", "bold")
+                    doc.text(`Location:`, xPos, maxRightYOffset)
+                    doc.setFont("helvetica", "normal")
+                    doc.text(`${resume.Location}`, xPos + 25, maxRightYOffset)
+                    maxRightYOffset += 5
+                    doc.setFont("helvetica", "bold")
+                    doc.text(`Website:`, xPos, maxRightYOffset)
+                    doc.setFont("helvetica", "normal")
+                    doc.text(`${resume.linkedIn}`, xPos + 25, maxRightYOffset)
+                    
             } else if (section.id === "education") {
-                maxRightYOffset += 5
+                maxRightYOffset += 1
                 doc.setFont("helvetica", "bold")
                 doc.text(section.fields.find((f) => f.id === "degree")?.value || "", xPos, maxRightYOffset)
 
@@ -130,17 +154,52 @@ export default function generateStefanoPDFPut(doc: jsPDF, resumeData: ResumeData
 
                 maxRightYOffset += 5
                 doc.setFont("helvetica", "normal")
-                doc.text(`${university}, ${dates}`, xPos, maxRightYOffset)
+                doc.text(`${resume.University}, ${dates}`, xPos, maxRightYOffset)
 
                 const gpa = resume.gpa;
                 if (gpa) {
                     maxRightYOffset += 5
                     doc.text(`GPA: ${gpa}`, xPos, maxRightYOffset)
                 }
-            }  else if (section.id === "certifications") {
+            } else if (section.id === "skills") {
+                const softSkillsText = resume.softskills?.replaceAll('""', "").trim()
+                const techSkillsText = resume.techskills?.replaceAll('""', "").trim()
+            
+                // Technical skills
+                if (techSkillsText) {
+                    maxRightYOffset += 1
+                    doc.setFont("helvetica", "bold")
+                    doc.text("Technical Skills:", xPos, maxRightYOffset)
+            
+                    const techSkillsArray = techSkillsText.split(", ").map(skill => skill.trim()).filter(skill => skill !== "")
+            
+                    techSkillsArray.forEach((techSkill) => {
+                        maxRightYOffset += 5
+                        doc.setFont("helvetica", "normal")
+                        doc.text(`• ${techSkill}`, xPos, maxRightYOffset)
+                    })
+                }
+            
+                // Soft skills
+                if (softSkillsText) {
+                    maxRightYOffset += 8
+                    doc.setFont("helvetica", "bold")
+                    doc.text("Soft Skills:", xPos, maxRightYOffset)
+            
+                    const softSkillsArray = softSkillsText.split(", ").map(skill => skill.trim()).filter(skill => skill !== "")
+            
+                    softSkillsArray.forEach((softSkill) => {
+                        maxRightYOffset += 5
+                        doc.setFont("helvetica", "normal")
+                        doc.text(`• ${softSkill}`, xPos, maxRightYOffset)
+                    })
+                }
+            }
+            
+            
+             else if (section.id === "certifications") {
                 // Group certifications
                 const certNames = section.fields.filter((f) => f.id.startsWith("cert") && !f.id.startsWith("certDate"))
-
                 certNames.forEach((cert) => {
                     const index = cert.id.replace("cert", "")
                     const date = section.fields.find((f) => f.id === `certDate${index}`)?.value || ""

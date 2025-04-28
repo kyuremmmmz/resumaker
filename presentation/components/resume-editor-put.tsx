@@ -23,6 +23,7 @@ export default function ResumeEditorPut({ resume }: ResumeEditorPutProps) {
     const {formData,
         handleInputChange,
         handleSubmit} = forms({ resume });
+    
     return (
         <div className="space-y-6">
             <ProfileImageSection resume={resume}/>
