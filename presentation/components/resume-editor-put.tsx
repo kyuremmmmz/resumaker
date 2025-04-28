@@ -12,28 +12,24 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { SoftwareEngineerResume } from "@/types/postData";
 import ProfileImageSection from "./sections/ProfileImageSection";
 import forms from "../hooks/client/forms";
+import ContactInfoSection from "./sections/ContactInfoSection";
+import WorkExperienceSection from "./sections/WorkExperienceSection";
 
 export interface ResumeEditorPutProps {
     resume: SoftwareEngineerResume;
 }
 
 export default function ResumeEditorPut({ resume }: ResumeEditorPutProps) {
-    const { formData,
-        profileImagePreview,
+    const {formData,
         handleInputChange,
-        handleImageUpload,
-        handleSubmit,
-        setFormData,
-        setProfileImagePreview } = forms({ resume });
+        handleSubmit} = forms({ resume });
     return (
         <div className="space-y-6">
             <ProfileImageSection resume={resume}/>
-
             {/* Resume Sections */}
             <Accordion type="multiple" defaultValue={["contact"]}>
                 {/* Contact Information */}
-
-
+                <ContactInfoSection resume={resume}/>
                 {/* About Me */}
                 <AccordionItem value="about">
                     <AccordionTrigger className="text-xl font-bold px-4">
@@ -60,103 +56,7 @@ export default function ResumeEditorPut({ resume }: ResumeEditorPutProps) {
                 </AccordionItem>
 
                 {/* Work Experience */}
-                <AccordionItem value="experience">
-                    <AccordionTrigger className="text-xl font-bold px-4">
-                        Work Experience
-                    </AccordionTrigger>
-                    <AccordionContent>
-                        <Card>
-                            <CardContent className="p-6">
-                                <div className="space-y-4">
-                                    <div className="space-y-2">
-                                        <Label htmlFor="jobTitle">Current Job Title</Label>
-                                        <Input
-                                            onChange={(e) => handleInputChange(e, "JobTitle")}
-                                            id="jobTitle"
-                                            name="jobTitle"
-                                            value={formData.JobTitle || ""}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="company">Current Company</Label>
-                                        <Input
-                                            onChange={(e) => handleInputChange(e, "Company")}
-                                            id="company"
-                                            name="company"
-                                            value={formData.Company || ""}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="location">Current Location</Label>
-                                        <Input
-                                            onChange={(e) => handleInputChange(e, "Location")}
-                                            id="location"
-                                            name="location"
-                                            value={formData.Location || ""}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="dates">Current Dates</Label>
-                                        <Input
-                                            onChange={(e) => handleInputChange(e, "Dates")}
-                                            id="dates"
-                                            name="dates"
-                                            value={formData.Dates || ""}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="description">Current Job Description</Label>
-                                        <Textarea
-                                            onChange={(e) => handleInputChange(e, "Description")}
-                                            id="description"
-                                            name="description"
-                                            value={formData.Description || ""}
-                                            rows={4}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="previousJobTitle">Previous Job Title</Label>
-                                        <Input
-                                            onChange={(e) => handleInputChange(e, "PreviousJobTitle")}
-                                            id="previousJobTitle"
-                                            name="previousJobTitle"
-                                            value={formData.PreviousJobTitle || ""}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="previousCompany">Previous Company</Label>
-                                        <Input
-                                            onChange={(e) => handleInputChange(e, "PreviousCompany")}
-                                            id="previousCompany"
-                                            name="previousCompany"
-                                            value={formData.PreviousCompany || ""}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="previousLocation">Previous Location</Label>
-                                        <Input
-                                            onChange={(e) => handleInputChange(e, "PreviousLocation")}
-                                            id="previousLocation"
-                                            name="previousLocation"
-                                            value={formData.PreviousLocation || ""}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="previousDescription">Previous Job Description</Label>
-                                        <Textarea
-                                            onChange={(e) => handleInputChange(e, "PreviousDescription")}
-                                            id="previousDescription"
-                                            name="previousDescription"
-                                            value={formData.PreviousDescription || ""}
-                                            rows={4}
-                                        />
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </AccordionContent>
-                </AccordionItem>
-
+                <WorkExperienceSection resume={resume}/>
                 {/* Education */}
                 <AccordionItem value="education">
                     <AccordionTrigger className="text-xl font-bold px-4">

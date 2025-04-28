@@ -9,6 +9,8 @@ import generateOliviaPDF from "@/presentation/hooks/postgenerators/olivia";
 import generateRachellePDF from "@/presentation/hooks/postgenerators/rachelle";
 import generateSamiraPDF from "@/presentation/hooks/postgenerators/samiraGenerator";
 import generateStefanoPDF from "@/presentation/hooks/postgenerators/stefanoGenerator";
+import generateRachellePDFPut from "@/presentation/hooks/putgenerators/rachellePut";
+import generateSamiraPDFPut from "@/presentation/hooks/putgenerators/samiraGeneratorPut";
 import generateStefanoPDFPut from "@/presentation/hooks/putgenerators/stefanoGeneratorPut";
 import { ResumeData } from "@/types/initial-data";
 import { SoftwareEngineerResume } from "@/types/postData";
@@ -43,7 +45,7 @@ export async function generatePDFPut(resumeData: ResumeData, profileImage: strin
             generateStefanoPDFPut(doc, resumeData, profileImage, single)
             break
         case "samira":
-            generateSamiraPDF(doc, resumeData, profileImage)
+            generateSamiraPDFPut(doc, resumeData, profileImage, single)
             break
         case "kathryn":
             generateKathrynPDF(doc, resumeData, profileImage)
@@ -58,7 +60,7 @@ export async function generatePDFPut(resumeData: ResumeData, profileImage: strin
             generateMargotPDF(doc, resumeData, profileImage)
             break
         case "rachelle":
-            generateRachellePDF(doc, resumeData, profileImage)
+            generateRachellePDFPut(doc, resumeData, profileImage,single)
             break
         case "daniel":
             generateDanielPDF(doc, resumeData, profileImage)

@@ -137,22 +137,7 @@ export default function generateStefanoPDFPut(doc: jsPDF, resumeData: ResumeData
                     maxRightYOffset += 5
                     doc.text(`GPA: ${gpa}`, xPos, maxRightYOffset)
                 }
-            } else if (section.id === "skills" || section.id === "languages") {
-                section.fields.forEach((field) => {
-                    maxRightYOffset += 5
-                    doc.setFont("helvetica", "bold")
-                    doc.text(`${field.label}:`, xPos, maxRightYOffset)
-
-                    const skillsArray = field.value.split(", ")
-                    let skillText = resume.softskills?.replaceAll('""', "")
-
-                    if (skillText) {
-                        maxRightYOffset += 5
-                        doc.setFont("helvetica", "normal")
-                        doc.text(skillText, xPos, maxRightYOffset)
-                    }
-                })
-            } else if (section.id === "certifications") {
+            }  else if (section.id === "certifications") {
                 // Group certifications
                 const certNames = section.fields.filter((f) => f.id.startsWith("cert") && !f.id.startsWith("certDate"))
 
