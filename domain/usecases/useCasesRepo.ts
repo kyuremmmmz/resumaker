@@ -19,7 +19,7 @@ export class UseCasesRepo{
         }
     }
 
-    async getResumeById(id: string): Promise<SoftwareEngineerResume> { 
+    async getResumeById(id: number): Promise<SoftwareEngineerResume> { 
         try {
             const resume = await this.resumeRepo.getById(id);
             return resume;
@@ -27,6 +27,15 @@ export class UseCasesRepo{
             console.log(error);
             throw new Error("");
             
+        }
+    }
+
+    async putData(props: SoftwareEngineerResume, id:string) {
+        try {
+            const resume = await this.resumeRepo.putData(props, id)
+            return resume;
+        } catch (error) {
+            console.log(error);
         }
     }
 }

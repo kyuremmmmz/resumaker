@@ -26,6 +26,7 @@ export default function ResumePagePut({resume}: {resume:SoftwareEngineerResume})
     resumeData,
     setResumeData,
     profileImage,
+    formData,
     setProfileImage,
     previewVisible,
     setPreviewVisible,
@@ -87,7 +88,7 @@ export default function ResumePagePut({resume}: {resume:SoftwareEngineerResume})
             <div className="sticky top-4">
               <Card className="overflow-hidden">
                 <CardContent className="p-0">
-                  <ActiveTemplateComponent single={resume} resumeData={resumeData} profileImage={profileImage} />
+                  <ActiveTemplateComponent single={formData} resumeData={resumeData} profileImage={profileImage} />
                 </CardContent>
               </Card>
             </div>
