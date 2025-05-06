@@ -14,19 +14,16 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import useEditorProps from "../hooks/useEditorprops"
 import { useRouter } from "next/navigation"
 import ResumeEditorPut from "../components/resume-editor-put"
-import { SoftwareEngineerResume } from "@/types/postData"
+import type { SoftwareEngineerResume } from "@/types/postData"
 import useEditorPutProps from "../hooks/useEditorPutProps"
 
-
-export default function ResumePagePut({resume}: {resume:SoftwareEngineerResume}) {
+export default function ResumePagePut({ resume }: { resume: SoftwareEngineerResume }) {
   const {
     resumeData,
     setResumeData,
     profileImage,
-    formData,
     setProfileImage,
     previewVisible,
     setPreviewVisible,
@@ -42,8 +39,16 @@ export default function ResumePagePut({resume}: {resume:SoftwareEngineerResume})
     handleSendEmail,
     templates,
     ActiveTemplateComponent,
-  } = useEditorPutProps({resume});
-  const router = useRouter();
+    formData,
+    setFormData,
+    handleInputChange,
+    handleImageUpload,
+    profileImagePreview,
+    handleSubmit,
+  } = useEditorPutProps({ resume })
+
+  const router = useRouter()
+
   return (
     <div className="container mx-auto py-8">
       <div className="flex flex-col gap-6">
@@ -54,11 +59,11 @@ export default function ResumePagePut({resume}: {resume:SoftwareEngineerResume})
               {previewVisible ? <EyeOff className="mr-2 h-4 w-4" /> : <Eye className="mr-2 h-4 w-4" />}
               {previewVisible ? "Hide Preview" : "Show Preview"}
             </Button>
-                <Button onClick={handleDownloadPut} disabled={isDownloading}>
+            <Button onClick={handleDownloadPut} disabled={isDownloading}>
               <Download className="mr-2 h-4 w-4" />
               {isDownloading ? "Generating PDF..." : "Download PDF"}
             </Button>
-            <Button onClick={()=>router.push('/')}>
+            <Button onClick={() => router.push("/")}>
               <DoorOpenIcon className="mr-2 h-4 w-4" />
               Back
             </Button>
@@ -81,14 +86,21 @@ export default function ResumePagePut({resume}: {resume:SoftwareEngineerResume})
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Editor Panel */}
-          <ResumeEditorPut resume={resume}  />
+          <ResumeEditorPut
+            resume={resume}
+            formData={formData}
+            setFormData={setFormData}
+            handleInputChange={handleInputChange}
+            handleImageUpload={handleImageUpload}
+            profileImagePreview={profileImagePreview}
+          />
 
           {/* Preview Panel */}
           {previewVisible && (
             <div className="sticky top-4">
               <Card className="overflow-hidden">
                 <CardContent className="p-0">
-                  <ActiveTemplateComponent single={formData} resumeData={resumeData} profileImage={profileImage} />
+                  <ActiveTemplateComponent resumeData={resumeData} profileImage={profileImage} single={formData} />
                 </CardContent>
               </Card>
             </div>

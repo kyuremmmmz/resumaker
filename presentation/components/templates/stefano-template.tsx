@@ -39,7 +39,7 @@ export default function StefanoTemplate({ resumeData, profileImage, single }: Te
           <Avatar className="h-24 w-24">
             <AvatarImage src={profileImage || ""} />
             <AvatarFallback className="bg-gray-400">
-              {fullName
+              {fullName || "AJ"
                 .split(" ")
                 .map((n) => n[0])
                 .join("") || "AJ"}
@@ -64,6 +64,13 @@ export default function StefanoTemplate({ resumeData, profileImage, single }: Te
               <div>
                 <h2 className="text-xl font-bold mb-2">Experience</h2>
                 <div className="space-y-4">
+                    <div>
+                      <h3 className="font-bold">{single.JobTitle}</h3>
+                      <p>{single.Company}, {single.Date1}</p>
+                      <ul className="list-disc pl-5 mt-2">
+                        <li>{single.Description}</li>
+                      </ul>
+                    </div>
                     <div>
                       <h3 className="font-bold">{single.PreviousJobTitle}</h3>
                       <p>{single.PreviousCompany}, {single.Date2}</p>
