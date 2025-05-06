@@ -1,7 +1,7 @@
 import { SoftwareEngineerResume } from "@/types/postData";
 
 
-export default async function putDataService(props: SoftwareEngineerResume, id:string): Promise<void> {
+export default async function putDataService(props: SoftwareEngineerResume, id:number): Promise<void> {
     try {
         const response = await fetch(`http://localhost:8080/api/resumes/putResume/${id}`, {
             method: 'PUT',

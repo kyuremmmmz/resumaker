@@ -28,6 +28,7 @@ import {
 import { SoftwareEngineer } from "@/Data/repositories/repositoryImpl";
 import { UseCasesRepo } from "@/domain/usecases/useCasesRepo";
 import { RecentResumesSectionProps, SoftwareEngineerResume } from "@/types/postData";
+import deleteResume from "@/Data/api/deleteResume";
 
 const fetchIt = async (): Promise<SoftwareEngineerResume[]> => {
   try {
@@ -109,7 +110,7 @@ export default function RecentResumesSection({ resumes }: RecentResumesSectionPr
                           Preview
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-red-600">
+                        <DropdownMenuItem onClick={async () => deleteResume(resume.id) } className="text-red-600">
                           <Trash className="mr-2 h-4 w-4" />
                           Delete
                         </DropdownMenuItem>

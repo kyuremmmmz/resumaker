@@ -30,7 +30,7 @@ export class UseCasesRepo{
         }
     }
 
-    async putData(props: SoftwareEngineerResume, id:string) {
+    async putData(props: SoftwareEngineerResume, id:number) {
         try {
             const resume = await this.resumeRepo.putData(props, id)
             return resume;

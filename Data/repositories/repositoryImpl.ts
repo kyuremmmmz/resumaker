@@ -6,7 +6,7 @@ import getResumeById from "../api/getResumeById";
 import putDataService from "../api/update";
 
 export class SoftwareEngineer implements ResumeRepo{
-    async putData(props: SoftwareEngineerResume, id:string): Promise<void> {
+    async putData(props: SoftwareEngineerResume, id:number): Promise<void> {
         try {
             return await putDataService(props, id);
         } catch (error) {

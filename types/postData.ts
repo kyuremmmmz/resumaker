@@ -1,7 +1,7 @@
 import { ResumeData } from "./initial-data";
 
 export interface SoftwareEngineerResume {
-    id: Number;
+    id: number;
     name: string | null;
     JobTitle: string | null;
     PreviousJobTitle: string | null;

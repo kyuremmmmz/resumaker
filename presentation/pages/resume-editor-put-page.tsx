@@ -19,7 +19,7 @@ import ResumeEditorPut from "../components/resume-editor-put"
 import type { SoftwareEngineerResume } from "@/types/postData"
 import useEditorPutProps from "../hooks/useEditorPutProps"
 
-export default function ResumePagePut({ resume }: { resume: SoftwareEngineerResume }) {
+export default function ResumePagePut({ resume, id }: { resume: SoftwareEngineerResume, id:string }) {
   const {
     resumeData,
     setResumeData,
@@ -87,14 +87,14 @@ export default function ResumePagePut({ resume }: { resume: SoftwareEngineerResu
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Editor Panel */}
           <ResumeEditorPut
+            id={id}
             resume={resume}
             formData={formData}
             setFormData={setFormData}
             handleInputChange={handleInputChange}
             handleImageUpload={handleImageUpload}
-            profileImagePreview={profileImagePreview}
-          />
-
+            profileImagePreview={profileImagePreview} 
+            handleSubmit={async () => handleSubmit(id, formData) }/>
           {/* Preview Panel */}
           {previewVisible && (
             <div className="sticky top-4">

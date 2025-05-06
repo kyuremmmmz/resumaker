@@ -8,9 +8,10 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Upload } from "lucide-react"
+import { Upload } from 'lucide-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import type { SoftwareEngineerResume } from "@/types/postData"
+import putDataService from "@/Data/api/update"
 
 export interface ResumeEditorPutProps {
   resume: SoftwareEngineerResume
@@ -20,8 +21,10 @@ export interface ResumeEditorPutProps {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: keyof SoftwareEngineerResume,
   ) => void
-  handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => void
-  profileImagePreview: string | null
+  handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => void,
+  handleSubmit: (id:string, resume:SoftwareEngineerResume) => Promise<void>,
+  profileImagePreview: string | null,
+  id:string,
 }
 
 export default function ResumeEditorPut({
@@ -30,8 +33,11 @@ export default function ResumeEditorPut({
   setFormData,
   handleInputChange,
   handleImageUpload,
+  handleSubmit,
+  id,
   profileImagePreview,
 }: ResumeEditorPutProps) {
+
   return (
     <div className="space-y-6">
       <Card>
@@ -42,7 +48,7 @@ export default function ResumeEditorPut({
               <Avatar className="h-24 w-24">
                 <AvatarImage src={profileImagePreview || ""} />
                 <AvatarFallback className="bg-gray-400">
-                  {formData.name
+                  {formData && formData.name 
                     ? formData.name
                         .split(" ")
                         .map((n) => n[0])
@@ -79,25 +85,25 @@ export default function ResumeEditorPut({
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name</Label>
-                    <Input id="name" value={formData.name || ""} onChange={(e) => handleInputChange(e, "name")} />
+                    <Input id="name" value={formData?.name || ""} onChange={(e) => handleInputChange(e, "name")} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="JobTitle">Job Title</Label>
                     <Input
                       id="JobTitle"
-                      value={formData.JobTitle || ""}
+                      value={formData?.JobTitle || ""}
                       onChange={(e) => handleInputChange(e, "JobTitle")}
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" value={formData.email || ""} onChange={(e) => handleInputChange(e, "email")} />
+                    <Input id="email" value={formData?.email || ""} onChange={(e) => handleInputChange(e, "email")} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="contactNumber">Phone</Label>
                     <Input
                       id="contactNumber"
-                      value={formData.contactNumber || ""}
+                      value={formData?.contactNumber || ""}
                       onChange={(e) => handleInputChange(e, "contactNumber")}
                     />
                   </div>
@@ -105,7 +111,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="address">Location</Label>
                     <Input
                       id="address"
-                      value={formData.address || ""}
+                      value={formData?.address || ""}
                       onChange={(e) => handleInputChange(e, "address")}
                     />
                   </div>
@@ -126,7 +132,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="aboutMe">About Me</Label>
                     <Textarea
                       id="aboutMe"
-                      value={formData.aboutMe || ""}
+                      value={formData?.aboutMe || ""}
                       onChange={(e) => handleInputChange(e, "aboutMe")}
                       rows={4}
                     />
@@ -135,7 +141,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="Description">Professional Summary</Label>
                     <Textarea
                       id="Description"
-                      value={formData.Description || ""}
+                      value={formData?.Description || ""}
                       onChange={(e) => handleInputChange(e, "Description")}
                       rows={4}
                     />
@@ -144,7 +150,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="github">GitHub</Label>
                     <Input
                       id="github"
-                      value={formData.github || ""}
+                      value={formData?.github || ""}
                       onChange={(e) => handleInputChange(e, "github")}
                       placeholder="https://github.com/username"
                     />
@@ -153,7 +159,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="linkedIn">LinkedIn</Label>
                     <Input
                       id="linkedIn"
-                      value={formData.linkedIn || ""}
+                      value={formData?.linkedIn || ""}
                       onChange={(e) => handleInputChange(e, "linkedIn")}
                       placeholder="https://linkedin.com/in/username"
                     />
@@ -162,7 +168,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="portfolio">Portfolio</Label>
                     <Input
                       id="portfolio"
-                      value={formData.portfolio || ""}
+                      value={formData?.portfolio || ""}
                       onChange={(e) => handleInputChange(e, "portfolio")}
                       placeholder="https://yourportfolio.com"
                     />
@@ -185,7 +191,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="JobTitle">Job Title</Label>
                     <Input
                       id="JobTitle"
-                      value={formData.JobTitle || ""}
+                      value={formData?.JobTitle || ""}
                       onChange={(e) => handleInputChange(e, "JobTitle")}
                     />
                   </div>
@@ -193,7 +199,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="Company">Company</Label>
                     <Input
                       id="Company"
-                      value={formData.Company || ""}
+                      value={formData?.Company || ""}
                       onChange={(e) => handleInputChange(e, "Company")}
                     />
                   </div>
@@ -201,19 +207,19 @@ export default function ResumeEditorPut({
                     <Label htmlFor="Location">Location</Label>
                     <Input
                       id="Location"
-                      value={formData.Location || ""}
+                      value={formData?.Location || ""}
                       onChange={(e) => handleInputChange(e, "Location")}
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="Dates">Dates</Label>
-                    <Input id="Dates" value={formData.Dates || ""} onChange={(e) => handleInputChange(e, "Dates")} />
+                    <Input id="Dates" value={formData?.Dates || ""} onChange={(e) => handleInputChange(e, "Dates")} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="Description">Description</Label>
                     <Textarea
                       id="Description"
-                      value={formData.Description || ""}
+                      value={formData?.Description || ""}
                       onChange={(e) => handleInputChange(e, "Description")}
                       rows={4}
                     />
@@ -224,7 +230,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="PreviousJobTitle">Job Title</Label>
                     <Input
                       id="PreviousJobTitle"
-                      value={formData.PreviousJobTitle || ""}
+                      value={formData?.PreviousJobTitle || ""}
                       onChange={(e) => handleInputChange(e, "PreviousJobTitle")}
                     />
                   </div>
@@ -232,7 +238,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="PreviousCompany">Company</Label>
                     <Input
                       id="PreviousCompany"
-                      value={formData.PreviousCompany || ""}
+                      value={formData?.PreviousCompany || ""}
                       onChange={(e) => handleInputChange(e, "PreviousCompany")}
                     />
                   </div>
@@ -240,15 +246,15 @@ export default function ResumeEditorPut({
                     <Label htmlFor="PreviousLocation">Location</Label>
                     <Input
                       id="PreviousLocation"
-                      value={formData.PreviousLocation || ""}
+                      value={formData?.PreviousLocation || ""}
                       onChange={(e) => handleInputChange(e, "PreviousLocation")}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="Date2">Dates</Label>
+                    <Label htmlFor="PreviousDates">Dates</Label>
                     <Input
-                      id="Date2"
-                      value={formData.Date2 || ""}
+                      id="PreviousDates"
+                      value={formData?.Date2 || ""}
                       onChange={(e) => handleInputChange(e, "Date2")}
                     />
                   </div>
@@ -256,7 +262,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="PreviousDescription">Description</Label>
                     <Textarea
                       id="PreviousDescription"
-                      value={formData.PreviousDescription || ""}
+                      value={formData?.PreviousDescription || ""}
                       onChange={(e) => handleInputChange(e, "PreviousDescription")}
                       rows={4}
                     />
@@ -276,13 +282,13 @@ export default function ResumeEditorPut({
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="degree">Degree</Label>
-                    <Input id="degree" value={formData.degree || ""} onChange={(e) => handleInputChange(e, "degree")} />
+                    <Input id="degree" value={formData?.degree || ""} onChange={(e) => handleInputChange(e, "degree")} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="University">University</Label>
                     <Input
                       id="University"
-                      value={formData.University || ""}
+                      value={formData?.University || ""}
                       onChange={(e) => handleInputChange(e, "University")}
                     />
                   </div>
@@ -290,7 +296,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="UnivLoc">University Location</Label>
                     <Input
                       id="UnivLoc"
-                      value={formData.UnivLoc || ""}
+                      value={formData?.UnivLoc || ""}
                       onChange={(e) => handleInputChange(e, "UnivLoc")}
                     />
                   </div>
@@ -298,13 +304,13 @@ export default function ResumeEditorPut({
                     <Label htmlFor="DateEnded">Dates Attended</Label>
                     <Input
                       id="DateEnded"
-                      value={formData.DateEnded || ""}
+                      value={formData?.DateEnded || ""}
                       onChange={(e) => handleInputChange(e, "DateEnded")}
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="gpa">GPA</Label>
-                    <Input id="gpa" value={formData.gpa || ""} onChange={(e) => handleInputChange(e, "gpa")} />
+                    <Input id="gpa" value={formData?.gpa || ""} onChange={(e) => handleInputChange(e, "gpa")} />
                   </div>
                 </div>
               </CardContent>
@@ -323,25 +329,25 @@ export default function ResumeEditorPut({
                     <Label htmlFor="Certification1">Certification 1</Label>
                     <Input
                       id="Certification1"
-                      value={formData.Certification1 || ""}
+                      value={formData?.Certification1 || ""}
                       onChange={(e) => handleInputChange(e, "Certification1")}
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="Date1">Date 1</Label>
-                    <Input id="Date1" value={formData.Date1 || ""} onChange={(e) => handleInputChange(e, "Date1")} />
+                    <Input id="Date1" value={formData?.Date1 || ""} onChange={(e) => handleInputChange(e, "Date1")} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="Certification2">Certification 2</Label>
                     <Input
                       id="Certification2"
-                      value={formData.Certification2 || ""}
+                      value={formData?.Certification2 || ""}
                       onChange={(e) => handleInputChange(e, "Certification2")}
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="Date2">Date 2</Label>
-                    <Input id="Date2" value={formData.Date2 || ""} onChange={(e) => handleInputChange(e, "Date2")} />
+                    <Input id="Date2" value={formData?.Date2 || ""} onChange={(e) => handleInputChange(e, "Date2")} />
                   </div>
                 </div>
               </CardContent>
@@ -360,7 +366,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="techskills">Technical Skills</Label>
                     <Textarea
                       id="techskills"
-                      value={formData.techskills || ""}
+                      value={formData?.techskills || ""}
                       onChange={(e) => handleInputChange(e, "techskills")}
                       rows={4}
                     />
@@ -369,7 +375,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="softskills">Soft Skills</Label>
                     <Textarea
                       id="softskills"
-                      value={formData.softskills || ""}
+                      value={formData?.softskills || ""}
                       onChange={(e) => handleInputChange(e, "softskills")}
                       rows={4}
                     />
@@ -382,7 +388,7 @@ export default function ResumeEditorPut({
       </Accordion>
 
       {/* Submit Button */}
-      <Button className="w-full">Save Resume</Button>
+      <Button onClick={async () => putDataService(formData, parseInt(id))} className="w-full">Save Resume</Button>
     </div>
   )
 }

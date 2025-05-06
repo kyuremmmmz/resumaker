@@ -47,24 +47,29 @@ export default function useEditorPutProps({ resume }: { resume: SoftwareEngineer
 
   // Initialize resumeData with the data from the resume prop
   const [resumeData, setResumeData] = useState<ResumeData>(() => {
-    const data = JSON.parse(JSON.stringify(initialResumeData)) // Deep clone
+    const data = JSON.parse(JSON.stringify(initialResumeData))
+
+    // Add null check for resume
+    if (!resume) {
+      return data
+    }
 
     // Map SoftwareEngineerResume fields to ResumeData structure
     const contactSection = data.sections.find((s: { id: string }) => s.id === "contact")
     if (contactSection) {
-      const fullNameField = contactSection.fields.find((f: { id: string }) => f.id === "name")
+      const fullNameField = contactSection.fields.find((f: { id: string }) => f.id === "fullName")
       if (fullNameField) fullNameField.value = resume.name || ""
 
-      const jobTitleField = contactSection.fields.find((f: { id: string }) => f.id === "JobTitle")
+      const jobTitleField = contactSection.fields.find((f: { id: string }) => f.id === "jobTitle")
       if (jobTitleField) jobTitleField.value = resume.JobTitle || ""
 
       const emailField = contactSection.fields.find((f: { id: string }) => f.id === "email")
       if (emailField) emailField.value = resume.email || ""
 
-      const phoneField = contactSection.fields.find((f: { id: string }) => f.id === "contactNumber")
+      const phoneField = contactSection.fields.find((f: { id: string }) => f.id === "phone")
       if (phoneField) phoneField.value = resume.contactNumber || ""
 
-      const locationField = contactSection.fields.find((f: { id: string }) => f.id === "address")
+      const locationField = contactSection.fields.find((f: { id: string }) => f.id === "location")
       if (locationField) locationField.value = resume.address || ""
 
       const websiteField = contactSection.fields.find((f: { id: string }) => f.id === "website")
@@ -180,8 +185,8 @@ export default function useEditorPutProps({ resume }: { resume: SoftwareEngineer
   })
 
   // Use the profile image from the resume or null
-  const [profileImage, setProfileImage] = useState<string | null>(resume.name || null)
-  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(resume.name || null)
+  const [profileImage, setProfileImage] = useState<string | null>(resume?.name || null)
+  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(resume?.name || null)
   const [previewVisible, setPreviewVisible] = useState(true)
   const [isDownloading, setIsDownloading] = useState(false)
   const [isSendingEmail, setIsSendingEmail] = useState(false)
@@ -220,7 +225,7 @@ export default function useEditorPutProps({ resume }: { resume: SoftwareEngineer
     // Update formData
     setFormData((prev) => ({
       ...prev,
-      [field]: value,
+      [field]: value || "",
     }))
 
     // Update resumeData based on the field
@@ -510,7 +515,7 @@ export default function useEditorPutProps({ resume }: { resume: SoftwareEngineer
   }
 
   // Handle form submission
-  const handleSubmit = () => {
+  const handleSubmit = (id:string, resume:SoftwareEngineerResume) => {
     console.log("Updated resume data:", formData)
     // Here you would typically send the data to your backend
     toast({

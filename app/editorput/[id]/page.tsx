@@ -13,9 +13,9 @@ export default async function page({ params }: { params: Promise<{ id: string }>
     const id = (await params).id;
     const repo = new SoftwareEngineer();
     const useCase = new UseCasesRepo(repo);
-    const resumes = await useCase.getResumeById(id);
+    const resumes = await useCase.getResumeById(parseInt(id));
 
     
     
-    return <ResumePagePut resume={resumes} />
+    return <ResumePagePut resume={resumes} id={id.toString()} />
 }
