@@ -1,6 +1,6 @@
 import { ResumeData } from "@/types/initial-data";
 import { SoftwareEngineerResume } from "@/types/postData";
-import jsPDF from "jspdf";
+import jsPDF, { ImageOptions } from "jspdf";
 
 export default function generateLornaPDFPut(doc: jsPDF, resumeData: ResumeData, profileImage: string | null, resume: SoftwareEngineerResume) {
     // Page dimensions and margins
@@ -43,7 +43,7 @@ export default function generateLornaPDFPut(doc: jsPDF, resumeData: ResumeData, 
     doc.setFontSize(24);
     doc.setFont("helvetica", "bold");
     yPos = checkPageBreak(yPos, 10);
-    doc.text(fullName, margin, yPos);
+    doc.text(`${fullName}`, margin, yPos);
 
     yPos += 10;
     doc.setFontSize(16);
@@ -51,8 +51,10 @@ export default function generateLornaPDFPut(doc: jsPDF, resumeData: ResumeData, 
     doc.text(`${jobTitle}`, margin, yPos);
 
     yPos += 20;
-    doc.setFillColor(150, 150, 150); // Gray circle
-    doc.circle(30, 50, 20, "F");
+    doc.setFillColor(150, 150, 150); 
+    if (profileImage) {
+        doc.addImage(profileImage, 'JPEG', 16, 20, 50, 50);
+    }
 
     // Two column layout
     const colWidth = (pageWidth - 3 * margin) / 2;

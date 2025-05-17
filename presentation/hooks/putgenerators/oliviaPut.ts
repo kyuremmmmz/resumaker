@@ -20,7 +20,7 @@ export default function generateOliviaPDFPut(doc: jsPDF, resumeData: ResumeData,
     const email = contactSection?.fields.find((f) => f.id === "email")?.value || "";
     const phone = contactSection?.fields.find((f) => f.id === "phone")?.value || "";
     const location = contactSection?.fields.find((f) => f.id === "location")?.value || "";
-    const website = contactSection?.fields.find((f) => f.id === "website")?.value || "";
+    const website = contactSection?.fields.find((f) => f.id === "linked_in")?.value || "";
 
     // Helper function to check and add page break if needed
     const checkPageBreak = (currentY: number, spaceNeeded: number): number => {
@@ -33,7 +33,6 @@ export default function generateOliviaPDFPut(doc: jsPDF, resumeData: ResumeData,
         }
         return currentY;
     };
-
     // Background color for left column
     doc.setFillColor(245, 245, 245); // Light gray
     doc.rect(0, 0, colWidth, pageHeight, "F"); // Full height
@@ -41,7 +40,7 @@ export default function generateOliviaPDFPut(doc: jsPDF, resumeData: ResumeData,
     // Header
     doc.setFontSize(24);
     doc.setFont("helvetica", "bold");
-    doc.text(fullName, colWidth + margin, 25);
+    doc.text(`${fullName}`, colWidth + margin, 25);
 
     doc.setFontSize(16);
     doc.setFont("helvetica", "normal");
@@ -56,7 +55,9 @@ export default function generateOliviaPDFPut(doc: jsPDF, resumeData: ResumeData,
     doc.setFont("helvetica", "bold");
     doc.text("Profile", colWidth + margin, rightColY);
     rightColY += 8;
-
+    if (profileImage) {
+        doc.addImage(profileImage, 'JPEG', 20, 15, 30, 30)
+    }
     // Summary as profile
     const summarySection = resumeData.sections.find((s) => s.id === "summary");
     if (summarySection) {

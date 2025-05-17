@@ -54,11 +54,11 @@ export default function generateJulianaPDF(doc: jsPDF, resumeData: ResumeData, p
     doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
     yPos = checkPageBreak(yPos, 8);
-    doc.text(fullName, margin, yPos);
+    doc.text(`${fullName}`, margin, yPos);
 
     // Heart symbol
     doc.setTextColor(213, 63, 140); // Pink text
-    doc.text("♥", margin + doc.getTextWidth(fullName) + 5, yPos);
+    doc.text("♥", margin + doc.getTextWidth(`${fullName}`) + 5, yPos);
 
     yPos += 8;
 

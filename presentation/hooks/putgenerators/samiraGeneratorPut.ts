@@ -24,7 +24,7 @@ export default function generateSamiraPDFPut(doc: jsPDF, resumeData: ResumeData,
     // Header
     doc.setFontSize(24);
     doc.setFont("helvetica", "bold");
-    doc.text(fullName, margin, 20);
+    doc.text(`${fullName}`, margin, 20);
 
     doc.setFontSize(16);
     doc.setFont("helvetica", "normal");
@@ -148,7 +148,7 @@ export default function generateSamiraPDFPut(doc: jsPDF, resumeData: ResumeData,
         }
     }
 
-    // Skills
+    // Skills - Updated to two columns
     yPos = checkPageBreak(yPos, 21); // Section title + initial spacing
     yPos += 5;
     const skillsSection = resumeData.sections.find((s) => s.id === "skills");
@@ -158,24 +158,49 @@ export default function generateSamiraPDFPut(doc: jsPDF, resumeData: ResumeData,
         doc.text("SKILLS", margin, yPos);
         yPos += 10;
 
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-        skillsSection.fields.forEach((field) => {
-            yPos = checkPageBreak(yPos, 5);
+        // Define column widths and positions
+        const columnWidth = (pageWidth - 3 * margin) / 2;
+        const leftColumnX = margin;
+        const rightColumnX = margin + columnWidth + margin;
+
+        // Technical Skills (Left Column)
+        let techYPos = yPos;
+        const techSkillsField = skillsSection.fields.find((f) => f.label.toLowerCase().includes("technical"));
+        if (techSkillsField) {
+            doc.setFontSize(10);
             doc.setFont("helvetica", "bold");
-            doc.text(`${field.label}:`, margin, yPos);
-            yPos += 5;
+            doc.text("Technical Skills:", leftColumnX, techYPos);
+            techYPos += 5;
 
             doc.setFont("helvetica", "normal");
-            const skillsArray = field.value.split(", ");
-            skillsArray.forEach((skill) => {
-                yPos = checkPageBreak(yPos, 5);
-                doc.text(`• ${skill}`, margin + 5, yPos);
-                yPos += 5;
+            const techSkillsArray = techSkillsField.value.split(", ");
+            techSkillsArray.forEach((skill) => {
+                techYPos = checkPageBreak(techYPos, 5);
+                doc.text(`• ${skill}`, leftColumnX + 5, techYPos);
+                techYPos += 5;
             });
+        }
 
-            yPos += 3;
-        });
+        // Soft Skills (Right Column)
+        let softYPos = yPos;
+        const softSkillsField = skillsSection.fields.find((f) => f.label.toLowerCase().includes("soft"));
+        if (softSkillsField) {
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "bold");
+            doc.text("Soft Skills:", rightColumnX, softYPos);
+            softYPos += 5;
+
+            doc.setFont("helvetica", "normal");
+            const softSkillsArray = softSkillsField.value.split(", ");
+            softSkillsArray.forEach((skill) => {
+                softYPos = checkPageBreak(softYPos, 5);
+                doc.text(`• ${skill}`, rightColumnX + 5, softYPos);
+                softYPos += 5;
+            });
+        }
+
+        // Update yPos to the maximum of the two columns
+        yPos = Math.max(techYPos, softYPos) + 5;
     }
 
     // Certifications
