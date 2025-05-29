@@ -18,10 +18,6 @@ export function QuickActionsSection() {
           <PlusCircle className="h-4 w-4" />
           Create New Resume
         </Button>
-        <Button variant="outline" className="w-full justify-start gap-2">
-          <Copy className="h-4 w-4" />
-          Duplicate Resume
-        </Button>
       </CardContent>
     </Card>
   )

@@ -2,7 +2,6 @@
 
 import { DashboardLayout } from "@/presentation/layouts/dashboard-layout"
 import { DashboardHeader } from "@/presentation/components/dashboard/dashboard-header"
-import { ResumeTemplatesSection } from "@/presentation/components/dashboard/resume-templates-section"
 
 import { StatsSection } from "@/presentation/components/dashboard/stats-section"
 import { QuickActionsSection } from "@/presentation/components/dashboard/quick-actions-section"
@@ -18,7 +17,6 @@ export default function DashboardPage(resume: RecentResumesSectionProps) {
             <QuickActionsSection />
           </div>
         <RecentResumesSection resumes={resume.resumes} />
-        <ResumeTemplatesSection />
       </div>
     </DashboardLayout>
   )

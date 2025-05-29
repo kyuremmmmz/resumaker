@@ -61,10 +61,7 @@ export function Sidebar() {
           <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Theme</span>
           <ThemeToggle />
         </div>
-        <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 w-full">
-          <LogOut className="mr-3 h-5 w-5" />
-          Log out
-        </button>
+        
       </div>
     </div>
   )
