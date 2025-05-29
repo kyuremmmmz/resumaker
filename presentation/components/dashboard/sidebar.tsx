@@ -4,9 +4,10 @@ import { cn } from "@/Core/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/presentation/components/theme-toggle"
 import { BarChart3, FileText, HelpCircle, Home, LogOut, PlusCircle, Settings, User } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-
+import images from "@/public/resumake.png"
 const sidebarLinks = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "My Resumes", href: "/resumes", icon: FileText },
@@ -21,8 +22,7 @@ export function Sidebar() {
     <div className="hidden md:flex flex-col w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
       <div className="p-6">
         <div className="flex items-center space-x-2">
-          <FileText className="h-8 w-8 text-primary" />
-          <h1 className="text-2xl font-bold">Resumake</h1>
+          <Image src={images} alt={""}/>
         </div>
       </div>
 
