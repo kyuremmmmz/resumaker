@@ -29,6 +29,8 @@ import { SoftwareEngineer } from "@/Data/repositories/repositoryImpl";
 import { UseCasesRepo } from "@/domain/usecases/useCasesRepo";
 import { RecentResumesSectionProps, SoftwareEngineerResume } from "@/types/postData";
 import deleteResume from "@/Data/api/deleteResume";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const fetchIt = async (): Promise<SoftwareEngineerResume[]> => {
   try {
@@ -44,6 +46,7 @@ const fetchIt = async (): Promise<SoftwareEngineerResume[]> => {
 
 
 export default function RecentResumesSection({ resumes }: RecentResumesSectionProps) {
+  const router = useRouter();
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -97,15 +100,11 @@ export default function RecentResumesSection({ resumes }: RecentResumesSectionPr
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={()=>router.push(`/editorput/${resume.id}`)}>
                           <Edit className="mr-2 h-4 w-4" />
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Download className="mr-2 h-4 w-4" />
-                          Download
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={()=>router.push(`/editorput/${resume.id}`)}>
                           <Eye className="mr-2 h-4 w-4" />
                           Preview
                         </DropdownMenuItem>
