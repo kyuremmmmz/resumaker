@@ -138,15 +138,6 @@ export default function ResumeEditorPut({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="Description">Professional Summary</Label>
-                    <Textarea
-                      id="Description"
-                      value={formData?.Description || ""}
-                      onChange={(e) => handleInputChange(e, "Description")}
-                      rows={4}
-                    />
-                  </div>
-                  <div className="space-y-2">
                     <Label htmlFor="github">GitHub</Label>
                     <Input
                       id="github"
