@@ -185,14 +185,7 @@ export default function ResumeEditorPut({
                       onChange={(e) => handleInputChange(e, "Company")}
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="address">Location</Label>
-                    <Input
-                      id="address"
-                      value={formData?.address || ""}
-                      onChange={(e) => handleInputChange(e, "address")}
-                    />
-                  </div>
+                  
                   <div className="space-y-2">
                     <Label htmlFor="Dates">Dates</Label>
                     <Input id="Dates" value={formData?.Dates || ""} onChange={(e) => handleInputChange(e, "Dates")} />
