@@ -17,7 +17,7 @@ export default function LornaTemplate({ resumeData, profileImage, single }: Temp
         { id: "jobTitle", value: single.JobTitle, label: "Job Title" },
         { id: "email", value: single.email, label: "Email" },
         { id: "phone", value: single.contactNumber, label: "Phone" },
-        { id: "location", value: single.Location, label: "Location" },
+        { id: "address", value: single.address, label: "Location" },
       ],
       id: "contact",
       title: "Contact",
@@ -93,8 +93,8 @@ export default function LornaTemplate({ resumeData, profileImage, single }: Temp
                     <MapPin size={16} className="text-blue-500" />
                     <span>
                       {single
-                        ? single.Location
-                        : contactSection?.fields.find((f) => f.id === "location")?.value}
+                        ? single.address
+                        : contactSection?.fields.find((f) => f.id === "address")?.value}
                     </span>
                   </div>
                 </div>

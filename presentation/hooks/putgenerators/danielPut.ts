@@ -35,7 +35,7 @@ export default function generateDanielPDFPut(doc: jsPDF, resumeData: ResumeData,
     doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
     yPos = checkPageBreak(yPos, 10);
-    doc.text(fullName, margin, yPos);
+    doc.text(`${fullName}`, margin, yPos);
 
     yPos += 10;
     doc.setFontSize(16);
@@ -47,7 +47,7 @@ export default function generateDanielPDFPut(doc: jsPDF, resumeData: ResumeData,
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     yPos = checkPageBreak(yPos, 5);
-    doc.text(`${location} | ${email} | ${website}`, margin, yPos);
+    doc.text(`${resume.address} | ${email} | ${website}`, margin, yPos);
 
     yPos += 15;
 

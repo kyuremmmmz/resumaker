@@ -17,7 +17,7 @@ export default function RachelleTemplate({ resumeData, profileImage, single }: T
         { id: "jobTitle", value: single.JobTitle, label: "Job Title" },
         { id: "email", value: single.email, label: "Email" },
         { id: "phone", value: single.contactNumber, label: "Phone" },
-        { id: "location", value: single.Location, label: "Location" },
+        { id: "address", value: single.address, label: "Location" },
         { id: "website", value: single.email, label: "Website" }, // Placeholder, adjust if website is available
       ],
       id: "contact",
@@ -59,7 +59,7 @@ export default function RachelleTemplate({ resumeData, profileImage, single }: T
                     <AvatarImage src={profileImage || ""} className="object-cover" />
                     <AvatarFallback className="bg-gray-300 flex items-center justify-center">
                       <span className="text-4xl font-bold text-gray-500">
-                        {fullName
+                        {`${fullName}`
                           .split(" ")
                           .map((n) => n[0])
                           .join("") || "AJ"}
@@ -224,8 +224,8 @@ export default function RachelleTemplate({ resumeData, profileImage, single }: T
                     <MapPin className="text-pink-500" />
                     <span>
                       {single
-                        ? single.Location
-                        : contactSection?.fields.find((f) => f.id === "location")?.value}
+                        ? single.address
+                        : contactSection?.fields.find((f) => f.id === "address")?.value}
                     </span>
                   </div>
                 </div>

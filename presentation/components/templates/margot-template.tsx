@@ -17,7 +17,7 @@ export default function MargotTemplate({ resumeData, profileImage, single }: Tem
         { id: "jobTitle", value: single.JobTitle, label: "Job Title" },
         { id: "email", value: single.email, label: "Email" },
         { id: "phone", value: single.contactNumber, label: "Phone" },
-        { id: "location", value: single.Location, label: "Location" },
+        { id: "address", value: single.address, label: "Location" },
         { id: "website", value: single.email, label: "Website" }, // Placeholder, adjust if website is available
       ],
       id: "contact",
@@ -73,8 +73,8 @@ export default function MargotTemplate({ resumeData, profileImage, single }: Tem
                   </div>
                   <span>
                     {single
-                      ? single.Location
-                      : contactSection?.fields.find((f) => f.id === "location")?.value}
+                      ? single.address
+                      : contactSection?.fields.find((f) => f.id === "address")?.value}
                   </span>
                 </div>
                 <div className="flex items-center gap-4">

@@ -19,7 +19,7 @@ export default function generateOliviaPDFPut(doc: jsPDF, resumeData: ResumeData,
     const contactSection = resumeData.sections.find((s) => s.id === "contact");
     const email = contactSection?.fields.find((f) => f.id === "email")?.value || "";
     const phone = contactSection?.fields.find((f) => f.id === "phone")?.value || "";
-    const location = contactSection?.fields.find((f) => f.id === "location")?.value || "";
+    const location = contactSection?.fields.find((f) => f.id === "address")?.value || "";
     const website = contactSection?.fields.find((f) => f.id === "linked_in")?.value || "";
 
     // Helper function to check and add page break if needed

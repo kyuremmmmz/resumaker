@@ -16,7 +16,7 @@ export default function KathrynTemplate({ resumeData, profileImage, single }: Te
         { id: "jobTitle", value: single.JobTitle, label: "Job Title" },
         { id: "email", value: single.email, label: "Email" },
         { id: "phone", value: single.contactNumber, label: "Phone" },
-        { id: "location", value: single.Location, label: "Location" },
+        { id: "address", value: single.address, label: "Location" },
       ],
       id: "contact",
       title: "Contact",
@@ -64,8 +64,8 @@ export default function KathrynTemplate({ resumeData, profileImage, single }: Te
               </li>
               <li>
                 {single
-                  ? single.Location
-                  : contactSection?.fields.find((f) => f.id === "location")?.value}
+                  ? single.address
+                  : contactSection?.fields.find((f) => f.id === "address")?.value}
               </li>
             </ul>
           </div>

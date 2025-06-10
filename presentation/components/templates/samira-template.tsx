@@ -16,7 +16,7 @@ export default function SamiraTemplate({ resumeData, profileImage, single }: Tem
         { id: "jobTitle", value: single.JobTitle, label: "Job Title" },
         { id: "email", value: single.email, label: "Email" },
         { id: "phone", value: single.contactNumber, label: "Phone" },
-        { id: "location", value: single.Location, label: "Address" },
+        { id: "address", value: single.address, label: "Address" },
         { id: "website", value: single.email, label: "Website" },
       ],
       id: "contact",
@@ -42,7 +42,7 @@ export default function SamiraTemplate({ resumeData, profileImage, single }: Tem
               <Avatar className="h-24 w-24">
                 <AvatarImage src={profileImage || ""} />
                 <AvatarFallback className="bg-gray-400">
-                  {fullName
+                  {`${fullName}`
                     .split(" ")
                     .map((n) => n[0])
                     .join("") || "AJ"}
@@ -80,8 +80,8 @@ export default function SamiraTemplate({ resumeData, profileImage, single }: Tem
               <div className="font-medium">Address:</div>
               <div>
                 {single
-                  ? single.Location
-                  : contactSection?.fields.find((f) => f.id === "location")?.value}
+                  ? single.address
+                  : contactSection?.fields.find((f) => f.id === "address")?.value}
               </div>
               <div className="font-medium">Website:</div>
               <div>

@@ -11,7 +11,7 @@ export const initialResumeData: ResumeData = {
                 { id: "jobTitle", label: "Job Title", value: "Software Developer" },
                 { id: "email", label: "Email", value: "alex.johnson@example.com" },
                 { id: "phone", label: "Phone", value: "+1 (555) 123-4567" },
-                { id: "location", label: "Location", value: "New York, NY" },
+                { id: "address", label: "Address", value: "New York, NY" },
                 { id: "website", label: "Website/LinkedIn", value: "linkedin.com/in/alexjohnson" },
             ],
         },

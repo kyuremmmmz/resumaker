@@ -19,7 +19,7 @@ export default function StefanoTemplate({ resumeData, profileImage, single }: Te
         { id: "jobTitle", value: single.JobTitle, label: "Job Title" },
         { id: "email", value: single.email, label: "Email" },
         { id: "phone", value: single.contactNumber, label: "Phone" },
-        { id: "location", value: single.Location, label: "Location" }
+        { id: "address", value: single.address, label: "Location" }
       ], id: "contact", title: "Contact"
     }
     : resumeData.sections.find((s) => s.id === "contact");
@@ -126,7 +126,7 @@ export default function StefanoTemplate({ resumeData, profileImage, single }: Te
                     <span className="font-bold">{'Name'}:</span> {single.name}<br></br>
                     <span className="font-bold">{'Contact Number'}:</span> {single.contactNumber}<br></br>
                     <span className="font-bold">{'LinkedIn'}:</span> {single.email}<br></br>
-                    <span className="font-bold">{'Address'}:</span> {single.Location}<br></br>
+                    <span className="font-bold">{'Address'}:</span> {single.address}<br></br>
                   </p>
                 </div>
               </div>

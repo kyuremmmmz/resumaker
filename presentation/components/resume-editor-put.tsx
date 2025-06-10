@@ -111,7 +111,7 @@ export default function ResumeEditorPut({
                     <Label htmlFor="address">Location</Label>
                     <Input
                       id="address"
-                      value={formData?.address || ""}
+                      value={formData?.address ?? ""}
                       onChange={(e) => handleInputChange(e, "address")}
                     />
                   </div>
@@ -155,15 +155,6 @@ export default function ResumeEditorPut({
                       placeholder="https://linkedin.com/in/username"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="portfolio">Portfolio</Label>
-                    <Input
-                      id="portfolio"
-                      value={formData?.portfolio || ""}
-                      onChange={(e) => handleInputChange(e, "portfolio")}
-                      placeholder="https://yourportfolio.com"
-                    />
-                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -195,11 +186,11 @@ export default function ResumeEditorPut({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="Location">Location</Label>
+                    <Label htmlFor="address">Location</Label>
                     <Input
-                      id="Location"
-                      value={formData?.Location || ""}
-                      onChange={(e) => handleInputChange(e, "Location")}
+                      id="address"
+                      value={formData?.address || ""}
+                      onChange={(e) => handleInputChange(e, "address")}
                     />
                   </div>
                   <div className="space-y-2">

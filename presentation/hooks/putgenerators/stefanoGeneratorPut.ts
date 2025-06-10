@@ -137,7 +137,7 @@ export default function generateStefanoPDFPut(doc: jsPDF, resumeData: ResumeData
                     doc.setFont("helvetica", "bold")
                     doc.text(`Location:`, xPos, maxRightYOffset)
                     doc.setFont("helvetica", "normal")
-                    doc.text(`${resume.Location}`, xPos + 25, maxRightYOffset)
+                    doc.text(`${resume.address}`, xPos + 25, maxRightYOffset)
                     maxRightYOffset += 5
                     doc.setFont("helvetica", "bold")
                     doc.text(`Website:`, xPos, maxRightYOffset)

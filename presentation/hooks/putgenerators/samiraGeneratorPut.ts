@@ -37,7 +37,7 @@ export default function generateSamiraPDFPut(doc: jsPDF, resumeData: ResumeData,
     const contactSection = resumeData.sections.find((s) => s.id === "contact");
     const email = contactSection?.fields.find((f) => f.id === "email")?.value;
     const phone = contactSection?.fields.find((f) => f.id === "phone")?.value;
-    const location = contactSection?.fields.find((f) => f.id === "location")?.value;
+    const location = contactSection?.fields.find((f) => f.id === "address")?.value;
     const website = contactSection?.fields.find((f) => f.id === "website")?.value;
 
     if (phone) {

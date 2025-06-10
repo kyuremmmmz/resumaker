@@ -17,7 +17,7 @@ export default function JulianaTemplate({ resumeData, profileImage, single }: Te
         { id: "jobTitle", value: single.JobTitle, label: "Job Title" },
         { id: "email", value: single.email, label: "Email" },
         { id: "phone", value: single.contactNumber, label: "Phone" },
-        { id: "location", value: single.Location, label: "Location" },
+        { id: "address", value: single.address, label: "Location" },
       ],
       id: "contact",
       title: "Contact",
